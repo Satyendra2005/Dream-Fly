@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Dream Fly | Search, compare and discover flights around the world."
+    />
+
+    <title>Dream Fly | Fly Beyond Boundaries</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <!-- LOGO -->
+        <a class="brand" href="index.html">
+          <img src="assets/images/logo.png" alt="Dream Fly Logo" />
+        </a>
+
+        <!-- MOBILE MENU -->
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Open navigation"
+        >
+          ☰
+        </button>
+
+        <!-- NAVIGATION -->
+        <nav id="mainNav">
+          <a class="active" href="index.html"> Home </a>
+
+          <a href="flights.html"> Flights </a>
+
+          <a href="deals.html"> Deals </a>
+
+          <a href="destinations.html"> Destinations </a>
+
+          <a href="airlines.html"> Airlines </a>
+
+          <a href="support.html"> Support </a>
+
+          <a href="about.html"> About </a>
+
+          <!-- SEARCH ICON -->
+          <button
+            class="nav-search"
+            type="button"
+            aria-label="Search"
+            title="Search"
+          >
+            ⌕
+          </button>
+
+          <!-- LOGIN -->
+          <a class="nav-login" href="contact.html"> Login </a>
+
+          <!-- SIGN UP -->
+          <a class="nav-signup" href="contact.html"> Sign Up </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
+
+      <section class="hero">
+        <div class="container hero-content">
+          <div class="hero-copy">
+            <span class="eyebrow"> EXPLORE THE WORLD </span>
+
+            <h1>
+              Travel Beyond
+              <span>Boundaries</span>
+            </h1>
+
+            <p>
+              Discover amazing destinations, book the best flights, and make
+              unforgettable memories with Dream Fly.
+            </p>
+
+            <a href="flights.html" class="btn btn-primary hero-button">
+              Explore Flights
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ===================================================
+           FLIGHT SEARCH BOX
+      ==================================================== -->
+
+        <div class="container search-container">
+          <div class="search-card">
+            <!-- TRIP TYPE -->
+
+            <div class="trip-tabs">
+              <button type="button" class="trip-tab active" data-trip="one">
+                One Way
+              </button>
+
+              <button type="button" class="trip-tab" data-trip="round">
+                Round Trip
+              </button>
+
+              <button type="button" class="trip-tab" data-trip="multi">
+                Multi-City
+              </button>
+            </div>
+
+            <!-- SEARCH FORM -->
+
+            <form id="flightSearchForm" class="flight-form">
+              <!-- FROM -->
+
+              <label class="search-field">
+                <span>From</span>
+
+                <div class="field-content">
+                  <span class="field-icon"> ⌖ </span>
+
+                  <input
+                    id="from"
+                    type="text"
+                    placeholder="Delhi (DEL)"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </label>
+
+              <!-- SWAP -->
+
+              <button
+                type="button"
+                class="swap-btn"
+                id="swapAirports"
+                aria-label="Swap airports"
+                title="Swap airports"
+              >
+                ⇄
+              </button>
+
+              <!-- TO -->
+
+              <label class="search-field">
+                <span>To</span>
+
+                <div class="field-content">
+                  <span class="field-icon"> ⌖ </span>
+
+                  <input
+                    id="to"
+                    type="text"
+                    placeholder="Dubai (DXB)"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </label>
+
+              <!-- DEPARTURE -->
+
+              <label class="search-field">
+                <span>Departure</span>
+
+                <div class="field-content">
+                  <span class="field-icon"> ▣ </span>
+
+                  <input id="departure" type="date" required />
+                </div>
+              </label>
+
+              <!-- RETURN -->
+
+              <label class="search-field" id="returnWrap">
+                <span>Return</span>
+
+                <div class="field-content">
+                  <span class="field-icon"> ▣ </span>
+
+                  <input id="returnDate" type="date" />
+                </div>
+              </label>
+
+              <!-- PASSENGERS -->
+
+              <label class="search-field">
+                <span>Passengers</span>
+
+                <div class="field-content">
+                  <span class="field-icon"> ♙ </span>
+
+                  <select id="passengers">
+                    <option>1 Passenger</option>
+
+                    <option>2 Passengers</option>
+
+                    <option>3 Passengers</option>
+
+                    <option>4 Passengers</option>
+
+                    <option>5 Passengers</option>
+
+                    <option>6 Passengers</option>
+                  </select>
+                </div>
+              </label>
+
+              <!-- CLASS -->
+
+              <label class="search-field">
+                <span>Class</span>
+
+                <div class="field-content">
+                  <span class="field-icon"> ♧ </span>
+
+                  <select id="cabin">
+                    <option>Economy</option>
+
+                    <option>Premium Economy</option>
+
+                    <option>Business</option>
+
+                    <option>First Class</option>
+                  </select>
+                </div>
+              </label>
+
+              <!-- NONSTOP -->
+
+              <label class="check-label">
+                <input id="nonstop" type="checkbox" />
+
+                <span> Nonstop only </span>
+              </label>
+
+              <!-- SEARCH BUTTON -->
+
+              <button type="submit" class="btn btn-primary search-btn">
+                <span class="search-icon"> ⌕ </span>
+
+                Search Flights
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+         FEATURES
+    ====================================================== -->
+
+      <section class="hero-features">
+        <div class="container feature-grid">
+          <!-- FEATURE 1 -->
+
+          <div class="feature-item">
+            <div class="feature-icon">♢</div>
+
+            <div>
+              <h3>Best Price Guarantee</h3>
+
+              <p>Get the lowest fares always</p>
+            </div>
+          </div>
+
+          <!-- FEATURE 2 -->
+
+          <div class="feature-item">
+            <div class="feature-icon">♧</div>
+
+            <div>
+              <h3>24/7 Customer Support</h3>
+
+              <p>We're here to help</p>
+            </div>
+          </div>
+
+          <!-- FEATURE 3 -->
+
+          <div class="feature-item">
+            <div class="feature-icon">✈</div>
+
+            <div>
+              <h3>Wide Global Network</h3>
+
+              <p>Fly to 1000+ destinations</p>
+            </div>
+          </div>
+
+          <!-- FEATURE 4 -->
+
+          <div class="feature-item">
+            <div class="feature-icon">☆</div>
+
+            <div>
+              <h3>Easy & Secure Booking</h3>
+
+              <p>Safe and hassle-free</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+         POPULAR DESTINATIONS
+    ====================================================== -->
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow"> Explore </span>
+
+              <h2>Popular destinations</h2>
+            </div>
+
+            <a href="destinations.html"> View all → </a>
+          </div>
+
+          <div class="destination-grid">
+            <a class="destination-card" href="flights.html?from=Delhi&to=Dubai">
+              <div class="destination-image image-dubai"></div>
+
+              <div>
+                <h3>Dubai</h3>
+
+                <p>From Delhi</p>
+              </div>
+            </a>
+
+            <a
+              class="destination-card"
+              href="flights.html?from=Delhi&to=London"
+            >
+              <div class="destination-image image-london"></div>
+
+              <div>
+                <h3>London</h3>
+
+                <p>From Delhi</p>
+              </div>
+            </a>
+
+            <a
+              class="destination-card"
+              href="flights.html?from=Delhi&to=Singapore"
+            >
+              <div class="destination-image image-singapore"></div>
+
+              <div>
+                <h3>Singapore</h3>
+
+                <p>From Delhi</p>
+              </div>
+            </a>
+
+            <a
+              class="destination-card"
+              href="flights.html?from=Mumbai&to=New York"
+            >
+              <div class="destination-image image-newyork"></div>
+
+              <div>
+                <h3>New York</h3>
+
+                <p>From Mumbai</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+         FLIGHT DEALS
+    ====================================================== -->
+
+      <section class="section section-soft">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow"> Great fares </span>
+
+              <h2>Flight deals</h2>
+            </div>
+
+            <a href="deals.html"> See all deals → </a>
+          </div>
+
+          <div class="deal-grid">
+            <article class="deal-card">
+              <span> Last Minute </span>
+
+              <h3>Delhi → Dubai</h3>
+
+              <p>Flexible options for your next getaway.</p>
+
+              <a href="flights.html?from=Delhi&to=Dubai"> Search flights → </a>
+            </article>
+
+            <article class="deal-card">
+              <span> Student </span>
+
+              <h3>Delhi → London</h3>
+
+              <p>Explore international routes and fares.</p>
+
+              <a href="flights.html?from=Delhi&to=London"> Search flights → </a>
+            </article>
+
+            <article class="deal-card">
+              <span> Featured </span>
+
+              <h3>Mumbai → Singapore</h3>
+
+              <p>Compare available flight options.</p>
+
+              <a href="flights.html?from=Mumbai&to=Singapore">
+                Search flights →
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+         AIRLINES
+    ====================================================== -->
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow"> Airlines </span>
+
+              <h2>Popular airlines</h2>
+            </div>
+
+            <a href="airlines.html"> View airlines → </a>
+          </div>
+
+          <div class="airline-strip">
+            <a href="airline-details.html?airline=IndiGo" class="airline-pill">
+              🔵 IndiGo
+            </a>
+
+            <a
+              href="airline-details.html?airline=Air India"
+              class="airline-pill"
+            >
+              🔴 Air India
+            </a>
+
+            <a
+              href="airline-details.html?airline=Emirates"
+              class="airline-pill"
+            >
+              ✈ Emirates
+            </a>
+
+            <a
+              href="airline-details.html?airline=Singapore Airlines"
+              class="airline-pill"
+            >
+              🟠 Singapore Airlines
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+         WHY DREAM FLY
+    ====================================================== -->
+
+      <section class="section section-soft">
+        <div class="container split">
+          <div>
+            <span class="eyebrow"> Why Dream Fly </span>
+
+            <h2>A simpler way to plan your flight.</h2>
+
+            <p>
+              Compare flight options in one place with a clean search experience
+              designed around the information travelers need most.
+            </p>
+          </div>
+
+          <div class="feature-list">
+            <div>✓ Easy flight search</div>
+
+            <div>✓ Compare available options</div>
+
+            <div>✓ Clear fare information</div>
+
+            <div>✓ Helpful support when you need it</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <!-- BRAND -->
+
+        <div>
+          <a class="brand footer-brand" href="index.html">
+            <img src="assets/images/logo.png" alt="Dream Fly Logo" />
+          </a>
+
+          <p>Find your flight. Follow your journey.</p>
+        </div>
+
+        <!-- EXPLORE -->
+
+        <div>
+          <h4>Explore</h4>
+
+          <a href="flights.html"> Flights </a>
+
+          <a href="deals.html"> Deals </a>
+
+          <a href="destinations.html"> Destinations </a>
+
+          <a href="airlines.html"> Airlines </a>
+        </div>
+
+        <!-- HELP -->
+
+        <div>
+          <h4>Help</h4>
+
+          <a href="support.html"> Support </a>
+
+          <a href="faq.html"> FAQ </a>
+
+          <a href="contact.html"> Contact </a>
+
+          <a href="blog.html"> Blog </a>
+        </div>
+
+        <!-- LEGAL -->
+
+        <div>
+          <h4>Legal</h4>
+
+          <a href="privacy-policy.html"> Privacy Policy </a>
+
+          <a href="terms.html"> Terms </a>
+
+          <a href="disclaimer.html"> Disclaimer </a>
+
+          <a href="user-agreement.html"> User Agreement </a>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        © 2026 Dream Fly. Prototype website.
+      </div>
+    </footer>
+
+    <!-- =====================================================
+       SUPPORT CHAT
+  ====================================================== -->
+
+    <div class="support-widget">
+      <button id="chatToggle" class="chat-toggle" aria-label="Open support">
+        💬
+      </button>
+
+      <div id="chatPanel" class="chat-panel">
+        <div class="chat-head">
+          <div>
+            <strong> Dream Fly Support </strong>
+
+            <small> Quick help </small>
+          </div>
+
+          <button id="chatClose" aria-label="Close support">×</button>
+        </div>
+
+        <div id="chatBody" class="chat-body">
+          <div class="chat-message bot">
+            Hi! Choose a common problem and I'll show you the available
+            guidance.
+          </div>
+
+          <div class="chat-options">
+            <button data-chat-topic="booking">🎫 Booking problem</button>
+
+            <button data-chat-topic="payment">💳 Payment problem</button>
+
+            <button data-chat-topic="cancel">🔄 Change / cancel</button>
+
+            <button data-chat-topic="confirmation">📧 Confirmation</button>
+
+            <button data-chat-topic="refund">💰 Refund</button>
+
+            <button data-chat-topic="other">❓ Other issue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

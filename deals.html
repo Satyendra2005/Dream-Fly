@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Flight Deals | Dream Fly" />
+    <title>Flight Deals | Dream Fly</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html">
+          <img src="assets/images/logo.png" alt="Dream Fly Logo" />
+        </a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <nav id="mainNav">
+          <a href="index.html">Home</a><a href="flights.html">Flights</a
+          ><a href="deals.html">Deals</a
+          ><a href="destinations.html">Destinations</a
+          ><a href="airlines.html">Airlines</a><a href="support.html">Support</a
+          ><a href="about.html">About</a
+          ><a class="nav-login" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <span class="eyebrow">Save on travel</span>
+          <h1>Flight deals</h1>
+          <p>Explore featured flight-search opportunities.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container deal-grid large">
+          <article class="deal-card">
+            <span>Last Minute</span>
+            <h2>Last-minute flights</h2>
+            <p>Compare options for flexible travel plans.</p>
+            <a class="btn btn-primary" href="flights.html">Find flights</a>
+          </article>
+          <article class="deal-card">
+            <span>Students</span>
+            <h2>Student flights</h2>
+            <p>Explore routes that can fit a student travel plan.</p>
+            <a class="btn btn-primary" href="flights.html">Find flights</a>
+          </article>
+          <article class="deal-card">
+            <span>Special</span>
+            <h2>Bereavement flights</h2>
+            <p>Search available options when urgent travel is required.</p>
+            <a class="btn btn-primary" href="flights.html">Find flights</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html"
+            ><span class="brand-mark">✈</span
+            ><span>Dream<span>Fly</span></span></a
+          >
+          <p>Find your flight. Follow your journey.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <a href="flights.html">Flights</a><a href="deals.html">Deals</a
+          ><a href="destinations.html">Destinations</a
+          ><a href="airlines.html">Airlines</a>
+        </div>
+        <div>
+          <h4>Help</h4>
+          <a href="support.html">Support</a><a href="faq.html">FAQ</a
+          ><a href="contact.html">Contact</a><a href="blog.html">Blog</a>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <a href="privacy-policy.html">Privacy Policy</a
+          ><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a
+          ><a href="user-agreement.html">User Agreement</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        © 2026 Dream Fly. Prototype website.
+      </div>
+    </footer>
+
+    <div class="support-widget">
+      <button id="chatToggle" class="chat-toggle" aria-label="Open support">
+        💬
+      </button>
+      <div id="chatPanel" class="chat-panel">
+        <div class="chat-head">
+          <div><strong>Dream Fly Support</strong><small>Quick help</small></div>
+          <button id="chatClose">×</button>
+        </div>
+        <div id="chatBody" class="chat-body">
+          <div class="chat-message bot">
+            Hi! Choose a common problem and I'll show you the available
+            guidance.
+          </div>
+          <div class="chat-options">
+            <button data-chat-topic="booking">🎫 Booking problem</button
+            ><button data-chat-topic="payment">💳 Payment problem</button
+            ><button data-chat-topic="cancel">🔄 Change / cancel</button
+            ><button data-chat-topic="confirmation">📧 Confirmation</button
+            ><button data-chat-topic="refund">💰 Refund</button
+            ><button data-chat-topic="other">❓ Other issue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

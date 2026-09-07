@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Booking | Dream Fly" />
+    <title>Booking | Dream Fly</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html">
+          <img src="assets/images/logo.png" alt="Dream Fly Logo" />
+        </a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <nav id="mainNav">
+          <a href="index.html">Home</a><a href="flights.html">Flights</a
+          ><a href="deals.html">Deals</a
+          ><a href="destinations.html">Destinations</a
+          ><a href="airlines.html">Airlines</a><a href="support.html">Support</a
+          ><a href="about.html">About</a
+          ><a class="nav-login" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <span class="eyebrow">Secure booking</span>
+          <h1>Passenger details</h1>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container booking-layout">
+          <form id="bookingForm" class="card form-card">
+            <h2>Passenger information</h2>
+            <div class="form-grid">
+              <label>First name<input required /></label
+              ><label>Last name<input required /></label
+              ><label>Email<input type="email" required /></label
+              ><label>Mobile number<input type="tel" required /></label
+              ><label>Date of birth<input type="date" /></label
+              ><label
+                >Gender<select>
+                  <option>Prefer not to say</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select></label
+              >
+            </div>
+            <h2>Contact preferences</h2>
+            <label class="check-label"
+              ><input type="checkbox" checked /> Send booking updates by
+              email</label
+            ><button class="btn btn-primary full" type="submit">
+              Continue to payment
+            </button>
+          </form>
+          <aside class="card booking-summary">
+            <h3>Booking summary</h3>
+            <div id="bookingSummary"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html"
+            ><span class="brand-mark">✈</span
+            ><span>Dream<span>Fly</span></span></a
+          >
+          <p>Find your flight. Follow your journey.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <a href="flights.html">Flights</a><a href="deals.html">Deals</a
+          ><a href="destinations.html">Destinations</a
+          ><a href="airlines.html">Airlines</a>
+        </div>
+        <div>
+          <h4>Help</h4>
+          <a href="support.html">Support</a><a href="faq.html">FAQ</a
+          ><a href="contact.html">Contact</a><a href="blog.html">Blog</a>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <a href="privacy-policy.html">Privacy Policy</a
+          ><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a
+          ><a href="user-agreement.html">User Agreement</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        © 2026 Dream Fly. Prototype website.
+      </div>
+    </footer>
+
+    <div class="support-widget">
+      <button id="chatToggle" class="chat-toggle" aria-label="Open support">
+        💬
+      </button>
+      <div id="chatPanel" class="chat-panel">
+        <div class="chat-head">
+          <div><strong>Dream Fly Support</strong><small>Quick help</small></div>
+          <button id="chatClose">×</button>
+        </div>
+        <div id="chatBody" class="chat-body">
+          <div class="chat-message bot">
+            Hi! Choose a common problem and I'll show you the available
+            guidance.
+          </div>
+          <div class="chat-options">
+            <button data-chat-topic="booking">🎫 Booking problem</button
+            ><button data-chat-topic="payment">💳 Payment problem</button
+            ><button data-chat-topic="cancel">🔄 Change / cancel</button
+            ><button data-chat-topic="confirmation">📧 Confirmation</button
+            ><button data-chat-topic="refund">💰 Refund</button
+            ><button data-chat-topic="other">❓ Other issue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
