@@ -8,6 +8,10 @@
 ========================================================= */
 
 @media (max-width: 1100px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
   /* -------------------------------------------------------
      HEADER
   ------------------------------------------------------- */
@@ -36,7 +40,7 @@
   }
 
   .hero-copy {
-    max-width: 570px;
+    max-width: 520px;
   }
 
   .hero h1 {
@@ -173,7 +177,7 @@
   }
 
   .hero-copy {
-    max-width: 520px;
+    max-width: 500px;
   }
 
   .hero h1 {
@@ -646,5 +650,512 @@
 
   .chat-panel {
     width: calc(100vw - 28px);
+  }
+}
+
+/* =========================================================
+   FINAL RESPONSIVE STABILIZATION
+   Keeps the existing Dream Fly design and improves
+   mobile / tablet / Safari behavior.
+========================================================= */
+
+/* Prevent accidental horizontal scrolling */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+iframe,
+svg {
+  max-width: 100%;
+}
+
+/* Better text wrapping on narrow screens */
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+button,
+label,
+span {
+  overflow-wrap: break-word;
+}
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+========================================================= */
+
+@media (max-width: 1024px) {
+  .container {
+    width: min(94%, var(--container));
+  }
+
+  .nav-wrap {
+    gap: 16px;
+  }
+
+  #mainNav {
+    gap: 14px;
+  }
+
+  .hero {
+    background-position: 60% center;
+  }
+
+  .hero-copy {
+    max-width: 500px;
+  }
+
+  .hero h1 {
+    max-width: 520px;
+  }
+
+  .hero p {
+    max-width: 500px;
+  }
+
+  .flight-form {
+    gap: 10px;
+  }
+
+  .flight-form input,
+  .flight-form select {
+    min-width: 0;
+    font-size: 0.92rem;
+  }
+
+  .destination-grid,
+  .deal-grid,
+  .testimonial-grid,
+  .blog-grid {
+    gap: 16px;
+  }
+
+  .footer-grid {
+    gap: 28px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .container {
+    width: calc(100% - 28px);
+    max-width: none;
+  }
+
+  /* Header */
+  .nav-wrap {
+    min-height: 68px;
+    position: relative;
+  }
+
+  .brand {
+    width: 125px;
+    height: 52px;
+  }
+
+  .brand img {
+    width: 105px;
+    height: 82px;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+    padding: 8px;
+    line-height: 1;
+  }
+
+  #mainNav {
+    left: 14px;
+    right: 14px;
+    top: calc(100% + 8px);
+    width: auto;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  #mainNav > a,
+  .nav-search,
+  .nav-login,
+  .nav-signup {
+    min-height: 44px;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 800px;
+    background-position: 63% center;
+  }
+
+  .hero-content {
+    min-height: 800px;
+    width: calc(100% - 28px);
+    padding-top: 55px;
+    padding-bottom: 350px;
+  }
+
+  .hero-copy {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.35rem, 11vw, 3.5rem);
+    max-width: 100%;
+  }
+
+  .hero p {
+    max-width: 100%;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  /* Search */
+  .search-container {
+    width: calc(100% - 28px);
+    max-width: none;
+    bottom: -250px;
+  }
+
+  .search-card {
+    width: 100%;
+    padding: 15px;
+    border-radius: 16px;
+  }
+
+  .trip-tabs {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .trip-tab {
+    min-height: 42px;
+  }
+
+  .flight-form {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .search-field,
+  .field-content,
+  .flight-form input,
+  .flight-form select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .flight-form input,
+  .flight-form select {
+    height: 47px;
+    font-size: 0.95rem;
+  }
+
+  .check-label {
+    width: 100%;
+  }
+
+  .search-btn {
+    width: 100%;
+    min-height: 47px;
+  }
+
+  /* Cards / sections */
+  .section {
+    padding: 55px 0;
+  }
+
+  .destination-image {
+    height: 200px;
+  }
+
+  .card,
+  .deal-card {
+    width: 100%;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 50px 0 18px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .footer-grid > div {
+    min-width: 0;
+  }
+
+  .footer-brand {
+    width: 150px;
+  }
+
+  .footer-brand img {
+    max-width: 112px;
+    height: auto;
+  }
+
+  .footer-bottom {
+    line-height: 1.5;
+  }
+
+  /* Chat */
+  .support-widget {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .chat-panel {
+    width: min(340px, calc(100vw - 28px));
+    max-width: calc(100vw - 28px);
+    right: 0;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .site-header {
+    width: 100%;
+  }
+
+  .brand {
+    width: 115px;
+  }
+
+  .brand img {
+    width: 98px;
+    height: 76px;
+  }
+
+  .hero {
+    min-height: 780px;
+    background-position: 66% center;
+  }
+
+  .hero-content {
+    min-height: 780px;
+    width: calc(100% - 24px);
+    padding-top: 48px;
+    padding-bottom: 335px;
+  }
+
+  .hero .eyebrow {
+    font-size: 0.74rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 12vw, 3.1rem);
+  }
+
+  .hero p {
+    font-size: 0.94rem;
+  }
+
+  .hero-button {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .search-container {
+    width: calc(100% - 24px);
+    bottom: -255px;
+  }
+
+  .search-card {
+    padding: 13px;
+  }
+
+  .trip-tabs {
+    margin-bottom: 14px;
+  }
+
+  .trip-tab {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+  }
+
+  .flight-form {
+    gap: 10px;
+  }
+
+  .flight-form input,
+  .flight-form select {
+    height: 46px;
+    padding-left: 12px;
+    padding-right: 34px;
+  }
+
+  .search-btn {
+    font-size: 0.95rem;
+  }
+
+  .hero-features {
+    padding-top: 305px;
+  }
+
+  .section {
+    padding: 50px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 20px;
+  }
+
+  .destination-image {
+    height: 190px;
+  }
+
+  .flight-card {
+    padding: 18px;
+  }
+
+  .flight-main {
+    gap: 10px;
+  }
+
+  .time {
+    font-size: 1.15rem;
+  }
+
+  .detail-route .time {
+    font-size: 1.5rem;
+  }
+
+  .actions .btn {
+    width: 100%;
+  }
+
+  .form-card,
+  .card {
+    padding: 20px;
+  }
+
+  .chat-toggle {
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+  .container {
+    width: calc(100% - 20px);
+  }
+
+  .nav-wrap {
+    min-height: 64px;
+  }
+
+  .brand {
+    width: 105px;
+    height: 48px;
+  }
+
+  .brand img {
+    width: 92px;
+    height: 70px;
+  }
+
+  #mainNav {
+    top: calc(100% + 6px);
+    left: 10px;
+    right: 10px;
+    padding: 12px;
+  }
+
+  .hero {
+    min-height: 750px;
+    background-position: 69% center;
+  }
+
+  .hero-content {
+    min-height: 750px;
+    width: calc(100% - 20px);
+    padding-top: 42px;
+    padding-bottom: 320px;
+  }
+
+  .hero h1 {
+    font-size: 2.15rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .search-container {
+    width: calc(100% - 20px);
+    bottom: -250px;
+  }
+
+  .search-card {
+    padding: 11px;
+  }
+
+  .trip-tab {
+    font-size: 0.76rem;
+    padding: 7px 9px;
+  }
+
+  .flight-form input,
+  .flight-form select {
+    height: 44px;
+    font-size: 0.88rem;
+  }
+
+  .hero-features {
+    padding-top: 300px;
+  }
+
+  .feature-item {
+    align-items: flex-start;
+  }
+
+  .feature-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+  }
+
+  .site-footer {
+    padding-top: 42px;
+  }
+
+  .footer-brand {
+    width: 130px;
+  }
+
+  .footer-brand img {
+    max-width: 100px;
+  }
+
+  .chat-panel {
+    width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
   }
 }
