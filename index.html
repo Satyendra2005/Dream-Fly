@@ -184,25 +184,118 @@
 
               <!-- PASSENGERS -->
 
-              <label class="search-field">
+              <!-- PASSENGERS -->
+
+              <label class="search-field passenger-field">
                 <span>Passengers</span>
 
                 <div class="field-content">
-                  <span class="field-icon"> ♙ </span>
+                  <button
+                    type="button"
+                    class="passenger-trigger"
+                    id="passengerTrigger"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <span class="passenger-icon">♙</span>
+                    <span id="passengerSummary">1 Traveler</span>
+                    <span class="passenger-arrow">⌄</span>
+                  </button>
 
-                  <select id="passengers">
-                    <option>1 Passenger</option>
+                  <div class="passenger-popup" id="passengerPopup">
+                    <div class="passenger-row">
+                      <div class="passenger-info">
+                        <strong>Adult</strong>
+                        <small>12+ years</small>
+                      </div>
 
-                    <option>2 Passengers</option>
+                      <div class="passenger-counter">
+                        <button
+                          type="button"
+                          class="passenger-minus"
+                          data-type="adult"
+                        >
+                          −
+                        </button>
 
-                    <option>3 Passengers</option>
+                        <span id="adultCount">1</span>
 
-                    <option>4 Passengers</option>
+                        <button
+                          type="button"
+                          class="passenger-plus"
+                          data-type="adult"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
 
-                    <option>5 Passengers</option>
+                    <div class="passenger-row">
+                      <div class="passenger-info">
+                        <strong>Child</strong>
+                        <small>2–11 years</small>
+                      </div>
 
-                    <option>6 Passengers</option>
-                  </select>
+                      <div class="passenger-counter">
+                        <button
+                          type="button"
+                          class="passenger-minus"
+                          data-type="child"
+                        >
+                          −
+                        </button>
+
+                        <span id="childCount">0</span>
+
+                        <button
+                          type="button"
+                          class="passenger-plus"
+                          data-type="child"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="passenger-row">
+                      <div class="passenger-info">
+                        <strong>Infant</strong>
+                        <small>0–2 years</small>
+                      </div>
+
+                      <div class="passenger-counter">
+                        <button
+                          type="button"
+                          class="passenger-minus"
+                          data-type="infant"
+                        >
+                          −
+                        </button>
+
+                        <span id="infantCount">0</span>
+
+                        <button
+                          type="button"
+                          class="passenger-plus"
+                          data-type="infant"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="passenger-popup-footer">
+                      <span id="passengerTotal">1 Traveler</span>
+
+                      <button
+                        type="button"
+                        class="passenger-done"
+                        id="passengerDone"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </label>
 

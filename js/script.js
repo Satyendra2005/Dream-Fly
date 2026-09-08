@@ -744,4 +744,189 @@ document.addEventListener("DOMContentLoaded", () => {
         "$" + Number(event.target.value).toLocaleString();
     }
   });
+
+  /* =========================
+     PASSENGER SELECTOR
+  ========================= */
+
+  const passengerTrigger = qs("#passengerTrigger");
+  const passengerPopup = qs("#passengerPopup");
+  const passengerDone = qs("#passengerDone");
+
+  const adultCount = qs("#adultCount");
+  const childCount = qs("#childCount");
+  const infantCount = qs("#infantCount");
+
+  const passengerSummary = qs("#passengerSummary");
+  const passengerTotal = qs("#passengerTotal");
+
+  /* Passenger numbers */
+
+  let passengers = {
+    adult: 1,
+    child: 0,
+    infant: 0,
+  };
+
+  /* Calculate total */
+
+  const getTotalPassengers = () => {
+    return passengers.adult + passengers.child + passengers.infant;
+  };
+
+  /* Update passenger display */
+
+  const updatePassengerDisplay = () => {
+    const total = getTotalPassengers();
+
+    if (adultCount) {
+      adultCount.textContent = passengers.adult;
+    }
+
+    if (childCount) {
+      childCount.textContent = passengers.child;
+    }
+
+    if (infantCount) {
+      infantCount.textContent = passengers.infant;
+    }
+
+    const travelerText = total === 1 ? "1 Traveler" : `${total} Travelers`;
+
+    if (passengerSummary) {
+      passengerSummary.textContent = travelerText;
+    }
+
+    if (passengerTotal) {
+      passengerTotal.textContent = travelerText;
+    }
+  };
+
+  /* Open passenger popup */
+
+  const openPassengerPopup = () => {
+    if (!passengerPopup || !passengerTrigger) {
+      return;
+    }
+
+    passengerPopup.classList.add("open");
+
+    passengerTrigger.setAttribute("aria-expanded", "true");
+  };
+
+  /* Close passenger popup */
+
+  const closePassengerPopup = () => {
+    if (!passengerPopup || !passengerTrigger) {
+      return;
+    }
+
+    passengerPopup.classList.remove("open");
+
+    passengerTrigger.setAttribute("aria-expanded", "false");
+  };
+
+  /* Passenger field click */
+
+  passengerTrigger?.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    if (passengerPopup?.classList.contains("open")) {
+      closePassengerPopup();
+    } else {
+      openPassengerPopup();
+    }
+  });
+
+  /* =========================
+     PLUS BUTTONS
+  ========================= */
+
+  qsa(".passenger-plus").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      const type = button.dataset.type;
+
+      if (!type || passengers[type] === undefined) {
+        return;
+      }
+
+      const total = getTotalPassengers();
+
+      /* Maximum 9 travelers */
+
+      if (total >= 9) {
+        toast("Maximum 9 travelers allowed.");
+        return;
+      }
+
+      passengers[type]++;
+
+      updatePassengerDisplay();
+    });
+  });
+
+  /* =========================
+     MINUS BUTTONS
+  ========================= */
+
+  qsa(".passenger-minus").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      const type = button.dataset.type;
+
+      if (!type || passengers[type] === undefined) {
+        return;
+      }
+
+      /* Adult minimum = 1 */
+
+      if (type === "adult" && passengers.adult <= 1) {
+        return;
+      }
+
+      /* Child / Infant minimum = 0 */
+
+      if (passengers[type] <= 0) {
+        return;
+      }
+
+      passengers[type]--;
+
+      updatePassengerDisplay();
+    });
+  });
+
+  /* =========================
+     DONE BUTTON
+  ========================= */
+
+  passengerDone?.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    closePassengerPopup();
+  });
+
+  /* =========================
+     CLOSE WHEN CLICKING OUTSIDE
+  ========================= */
+
+  document.addEventListener("click", (event) => {
+    if (
+      passengerPopup &&
+      passengerTrigger &&
+      !passengerPopup.contains(event.target) &&
+      !passengerTrigger.contains(event.target)
+    ) {
+      closePassengerPopup();
+    }
+  });
+
+  /* =========================
+     INITIAL DISPLAY
+  ========================= */
+
+  updatePassengerDisplay();
 });
