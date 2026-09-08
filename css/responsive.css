@@ -1,669 +1,29 @@
 /* =========================================================
-   DREAM FLY
-   RESPONSIVE STYLE SHEET
+   DREAM FLY - RESPONSIVE CSS
+   ---------------------------------------------------------
+   This file overrides the desktop stylesheet only when the
+   viewport becomes smaller. Desktop styles remain untouched.
+   Tested layout targets:
+   - Large tablets / small laptops
+   - Tablets
+   - Phones
+   - Very small phones
 ========================================================= */
 
 /* =========================================================
-   LARGE TABLET / SMALL LAPTOP
+   GLOBAL RESPONSIVE SAFETY
 ========================================================= */
 
-@media (max-width: 1100px) {
-  html,
-  body {
-    overflow-x: hidden;
-  }
-  /* -------------------------------------------------------
-     HEADER
-  ------------------------------------------------------- */
-
-  #mainNav {
-    gap: 14px;
-  }
-
-  #mainNav > a {
-    font-size: 0.85rem;
-  }
-
-  /* -------------------------------------------------------
-     HERO
-  ------------------------------------------------------- */
-
-  .hero {
-    min-height: 700px;
-  }
-
-  .hero-content {
-    min-height: 700px;
-
-    padding-top: 20px;
-    padding-bottom: 230px;
-  }
-
-  .hero-copy {
-    max-width: 520px;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.8rem, 6vw, 4.4rem);
-  }
-
-  /* -------------------------------------------------------
-     SEARCH
-  ------------------------------------------------------- */
-
-  .search-container {
-    bottom: -100px;
-  }
-
-  .search-card {
-    padding: 20px;
-  }
-
-  .flight-form {
-    grid-template-columns: 1fr 1fr;
-
-    gap: 12px;
-  }
-
-  .swap-btn {
-    display: none;
-  }
-
-  .check-label {
-    grid-column: 1 / -1;
-
-    height: 40px;
-  }
-
-  .search-btn {
-    grid-column: 1 / -1;
-  }
-
-  /* -------------------------------------------------------
-     FEATURES
-  ------------------------------------------------------- */
-
-  .hero-features {
-    padding-top: 165px;
-  }
-
-  .feature-grid {
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 25px;
-  }
-
-  /* -------------------------------------------------------
-     DESTINATIONS
-  ------------------------------------------------------- */
-
-  .destination-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* -------------------------------------------------------
-     RESULTS / BOOKING / SUPPORT
-  ------------------------------------------------------- */
-
-  .results-layout,
-  .booking-layout,
-  .support-layout {
-    grid-template-columns: 1fr;
-  }
-
-  /* -------------------------------------------------------
-     FOOTER
-  ------------------------------------------------------- */
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-
-    gap: 35px;
-  }
-}
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 850px) {
-  /* -------------------------------------------------------
-     HEADER
-  ------------------------------------------------------- */
-
-  .nav-wrap {
-    min-height: 72px;
-  }
-
-  .brand {
-    width: 135px;
-  }
-
-  .brand img {
-    width: 105px;
-    height: 82px;
-  }
-
-  #mainNav {
-    gap: 10px;
-  }
-
-  #mainNav > a {
-    font-size: 0.8rem;
-  }
-
-  .nav-login {
-    padding: 8px 12px;
-  }
-
-  .nav-signup {
-    padding: 9px 13px;
-  }
-
-  /* -------------------------------------------------------
-     HERO
-  ------------------------------------------------------- */
-
-  .hero {
-    min-height: 720px;
-
-    background-position: 58% center;
-  }
-
-  .hero-content {
-    min-height: 720px;
-
-    padding-bottom: 255px;
-  }
-
-  .hero-copy {
-    max-width: 500px;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.8rem, 7vw, 4rem);
-  }
-
-  /* -------------------------------------------------------
-     SEARCH
-  ------------------------------------------------------- */
-
-  .search-container {
-    bottom: -130px;
-  }
-
-  .search-card {
-    border-radius: 18px;
-  }
-
-  .flight-form {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  /* -------------------------------------------------------
-     SECTIONS
-  ------------------------------------------------------- */
-
-  .section {
-    padding: 75px 0;
-  }
-
-  .split {
-    grid-template-columns: 1fr 1fr;
-
-    gap: 35px;
-  }
-
-  /* -------------------------------------------------------
-     GRIDS
-  ------------------------------------------------------- */
-
-  .deal-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .testimonial-grid,
-  .blog-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 700px) {
-  /* -------------------------------------------------------
-     HEADER
-  ------------------------------------------------------- */
-
-  .nav-wrap {
-    min-height: 68px;
-  }
-
-  .brand {
-    width: 125px;
-    height: 52px;
-  }
-
-  .brand img {
-    width: 105px;
-    height: 82px;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  #mainNav {
-    display: none;
-
-    position: absolute;
-
-    left: 4%;
-    right: 4%;
-
-    top: 68px;
-
-    background: #ffffff;
-
-    border: 1px solid var(--line);
-
-    border-radius: 14px;
-
-    padding: 15px;
-
-    box-shadow: var(--shadow);
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 4px;
-  }
-
-  #mainNav.open {
-    display: flex;
-  }
-
-  #mainNav > a {
-    width: 100%;
-
-    padding: 10px;
-
-    font-size: 0.9rem;
-
-    border-radius: 8px;
-  }
-
-  #mainNav > a:hover,
-  #mainNav > a.active {
-    background: #f4f8ff;
-  }
-
-  .nav-search {
-    width: 100%;
-
-    text-align: left;
-
-    padding: 10px;
-  }
-
-  .nav-login,
-  .nav-signup {
-    text-align: center;
-
-    margin-top: 5px;
-  }
-
-  /* -------------------------------------------------------
-     HERO
-  ------------------------------------------------------- */
-
-  .hero {
-    min-height: 800px;
-
-    background-position: 65% center;
-  }
-
-  .hero-content {
-    min-height: 800px;
-
-    align-items: flex-start;
-
-    padding-top: 70px;
-
-    padding-bottom: 350px;
-  }
-
-  .hero-copy {
-    max-width: 100%;
-  }
-
-  .hero .eyebrow {
-    font-size: 0.78rem;
-
-    margin-bottom: 12px;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.7rem, 12vw, 4rem);
-
-    line-height: 1.02;
-
-    max-width: 100%;
-  }
-
-  .hero p {
-    font-size: 1rem;
-
-    max-width: 100%;
-
-    margin-bottom: 25px;
-  }
-
-  .hero-button {
-    padding: 13px 18px;
-  }
-
-  /* -------------------------------------------------------
-     SEARCH CARD
-  ------------------------------------------------------- */
-
-  .search-container {
-    width: 92%;
-
-    bottom: -250px;
-  }
-
-  .search-card {
-    padding: 17px;
-
-    border-radius: 16px;
-  }
-
-  .trip-tabs {
-    overflow-x: auto;
-
-    white-space: nowrap;
-
-    margin-bottom: 17px;
-
-    padding-bottom: 12px;
-  }
-
-  .trip-tab {
-    flex-shrink: 0;
-
-    padding: 8px 14px;
-  }
-
-  .flight-form {
-    grid-template-columns: 1fr;
-
-    gap: 12px;
-  }
-
-  .swap-btn {
-    display: none;
-  }
-
-  .check-label {
-    grid-column: auto;
-
-    height: auto;
-
-    padding: 5px 0;
-  }
-
-  .search-btn {
-    grid-column: auto;
-
-    width: 100%;
-
-    margin-top: 2px;
-  }
-
-  /* -------------------------------------------------------
-     HERO FEATURES
-  ------------------------------------------------------- */
-
-  .hero-features {
-    padding-top: 290px;
-
-    padding-bottom: 35px;
-  }
-
-  .feature-grid {
-    grid-template-columns: 1fr;
-
-    gap: 20px;
-  }
-
-  .feature-item {
-    gap: 13px;
-  }
-
-  /* -------------------------------------------------------
-     SECTIONS
-  ------------------------------------------------------- */
-
-  .section {
-    padding: 65px 0;
-  }
-
-  .section-heading {
-    display: block;
-
-    margin-bottom: 25px;
-  }
-
-  .section-heading > a {
-    display: inline-block;
-
-    margin-top: 5px;
-  }
-
-  /* -------------------------------------------------------
-     GRIDS
-  ------------------------------------------------------- */
-
-  .destination-grid,
-  .destination-grid.large,
-  .deal-grid,
-  .testimonial-grid,
-  .blog-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .destination-image {
-    height: 220px;
-  }
-
-  /* -------------------------------------------------------
-     SPLIT
-  ------------------------------------------------------- */
-
-  .split {
-    grid-template-columns: 1fr;
-
-    gap: 30px;
-  }
-
-  /* -------------------------------------------------------
-     FORM
-  ------------------------------------------------------- */
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* -------------------------------------------------------
-     FLIGHT RESULTS
-  ------------------------------------------------------- */
-
-  .flight-card {
-    grid-template-columns: 1fr;
-
-    gap: 15px;
-  }
-
-  .flight-main {
-    grid-template-columns: 1fr;
-
-    text-align: left;
-
-    gap: 8px;
-  }
-
-  .duration {
-    text-align: left;
-  }
-
-  .flight-price {
-    text-align: left;
-  }
-
-  /* -------------------------------------------------------
-     DETAILS
-  ------------------------------------------------------- */
-
-  .detail-route {
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 10px;
-  }
-
-  .detail-route .time {
-    font-size: 1.7rem;
-  }
-
-  .actions {
-    flex-direction: column;
-  }
-
-  /* -------------------------------------------------------
-     PAGE HERO
-  ------------------------------------------------------- */
-
-  .page-hero {
-    padding: 55px 0;
-  }
-
-  /* -------------------------------------------------------
-     FOOTER
-  ------------------------------------------------------- */
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-
-    gap: 30px;
-  }
-
-  .footer-bottom {
-    margin-top: 30px;
-  }
-
-  /* -------------------------------------------------------
-     CHAT
-  ------------------------------------------------------- */
-
-  .support-widget {
-    right: 16px;
-
-    bottom: 16px;
-  }
-
-  .chat-toggle {
-    width: 55px;
-    height: 55px;
-  }
-
-  .chat-panel {
-    width: min(340px, calc(100vw - 32px));
-
-    right: -5px;
-
-    bottom: 68px;
-  }
-}
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 420px) {
-  .container {
-    width: 94%;
-  }
-
-  .brand {
-    width: 115px;
-  }
-
-  .brand img {
-    width: 98px;
-  }
-
-  .hero {
-    min-height: 820px;
-  }
-
-  .hero-content {
-    min-height: 820px;
-
-    padding-top: 55px;
-  }
-
-  .hero h1 {
-    font-size: 2.65rem;
-  }
-
-  .search-container {
-    bottom: -285px;
-  }
-
-  .hero-features {
-    padding-top: 325px;
-  }
-
-  .search-card {
-    padding: 14px;
-  }
-
-  .trip-tab {
-    font-size: 0.82rem;
-
-    padding: 8px 11px;
-  }
-
-  .flight-form input,
-  .flight-form select {
-    height: 45px;
-  }
-
-  .search-btn {
-    min-height: 46px;
-  }
-
-  .chat-panel {
-    width: calc(100vw - 28px);
-  }
-}
-
-/* =========================================================
-   FINAL RESPONSIVE STABILIZATION
-   Keeps the existing Dream Fly design and improves
-   mobile / tablet / Safari behavior.
-========================================================= */
-
-/* Prevent accidental horizontal scrolling */
 html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 img,
@@ -673,11 +33,19 @@ svg {
   max-width: 100%;
 }
 
-/* Better text wrapping on narrow screens */
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
 h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 p,
 a,
 button,
@@ -687,74 +55,276 @@ span {
 }
 
 /* =========================================================
-   TABLET / SMALL LAPTOP
+   LARGE TABLET / SMALL LAPTOP
+   901px - 1100px
 ========================================================= */
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .container {
     width: min(94%, var(--container));
   }
 
   .nav-wrap {
-    gap: 16px;
+    gap: 18px;
   }
 
   #mainNav {
     gap: 14px;
   }
 
+  #mainNav > a {
+    font-size: 0.86rem;
+  }
+
   .hero {
-    background-position: 60% center;
+    min-height: 700px;
+  }
+
+  .hero-content {
+    min-height: 700px;
+    padding-top: 20px;
+    padding-bottom: 225px;
   }
 
   .hero-copy {
-    max-width: 500px;
+    max-width: 520px;
   }
 
   .hero h1 {
-    max-width: 520px;
+    font-size: clamp(2.8rem, 6vw, 4.2rem);
   }
 
   .hero p {
     max-width: 500px;
   }
 
+  .search-container {
+    width: min(94%, var(--container));
+    bottom: -95px;
+  }
+
+  .search-card {
+    padding: 20px;
+  }
+
   .flight-form {
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
-  .flight-form input,
-  .flight-form select {
-    min-width: 0;
-    font-size: 0.92rem;
+  .swap-btn {
+    display: none;
   }
 
+  .check-label,
+  .search-btn {
+    grid-column: 1 / -1;
+  }
+
+  .check-label {
+    height: 40px;
+  }
+
+  .hero-features {
+    padding-top: 165px;
+  }
+
+  .feature-grid,
   .destination-grid,
   .deal-grid,
   .testimonial-grid,
   .blog-grid {
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .results-layout,
+  .booking-layout,
+  .support-layout {
+    grid-template-columns: 1fr;
   }
 
   .footer-grid {
-    gap: 28px;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   701px - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+  .nav-wrap {
+    min-height: 72px;
+    position: relative;
+  }
+
+  .brand {
+    width: 135px;
+    height: 54px;
+  }
+
+  .brand img {
+    width: 105px;
+    height: 82px;
+  }
+
+  /* The desktop logo is shifted left. Reset that shift on
+     smaller screens so the complete logo stays visible. */
+  .site-header .brand {
+    transform: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+    padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  #mainNav {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    width: 100%;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 14px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  #mainNav.open {
+    display: flex;
+  }
+
+  #mainNav > a {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+  }
+
+  #mainNav > a:hover,
+  #mainNav > a.active {
+    background: #f4f8ff;
+  }
+
+  .nav-login,
+  .nav-signup {
+    justify-content: center;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  .hero {
+    min-height: 690px;
+    background-position: 60% center;
+  }
+
+  .hero-content {
+    min-height: 690px;
+    padding-top: 55px;
+    padding-bottom: 245px;
+  }
+
+  .hero-copy {
+    max-width: 500px;
+    margin-left: 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 4rem);
+  }
+
+  .hero p {
+    max-width: 470px;
+  }
+
+  .search-container {
+    bottom: -145px;
+  }
+
+  .search-card {
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .trip-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .trip-tab {
+    flex-shrink: 0;
+    min-height: 42px;
+  }
+
+  .flight-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .flight-form input,
+  .flight-form select,
+  .passenger-trigger {
+    min-width: 0;
+    font-size: 0.92rem;
+  }
+
+  .section {
+    padding: 65px 0;
+  }
+
+  .split {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .destination-grid.large,
+  .deal-grid.large {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* =========================================================
    MOBILE
+   0px - 700px
 ========================================================= */
 
 @media (max-width: 700px) {
+  /* ---------- PAGE WIDTH ---------- */
+
   .container {
     width: calc(100% - 28px);
     max-width: none;
   }
 
-  /* Header */
+  /* ---------- HEADER ---------- */
+
+  .site-header {
+    width: 100%;
+  }
+
   .nav-wrap {
     min-height: 68px;
-    position: relative;
+    gap: 10px;
   }
 
   .brand {
@@ -767,64 +337,96 @@ span {
     height: 82px;
   }
 
+  .site-header .brand {
+    transform: none;
+  }
+
   .menu-toggle {
     display: block;
     margin-left: auto;
     padding: 8px;
-    line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 25px;
   }
 
   #mainNav {
-    left: 14px;
-    right: 14px;
-    top: calc(100% + 8px);
-    width: auto;
-    max-height: calc(100vh - 90px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    left: 0;
+    right: 0;
+    top: calc(100% + 7px);
+    width: 100%;
+    max-height: calc(100vh - 84px);
+    padding: 13px;
   }
 
-  #mainNav > a,
-  .nav-search,
-  .nav-login,
-  .nav-signup {
+  #mainNav > a {
     min-height: 44px;
+    padding: 10px 12px;
   }
 
-  /* Hero */
+  /* ---------- HERO ---------- */
+
   .hero {
-    min-height: 800px;
-    background-position: 63% center;
+    min-height: auto;
+    display: block;
+    background-position: 65% center;
   }
 
   .hero-content {
-    min-height: 800px;
     width: calc(100% - 28px);
-    padding-top: 55px;
-    padding-bottom: 350px;
+    min-height: 545px;
+    padding-top: 52px;
+    padding-bottom: 120px;
+    align-items: flex-start;
   }
 
   .hero-copy {
     width: 100%;
     max-width: 100%;
+    margin-left: 0;
+  }
+
+  .hero .eyebrow {
+    font-size: 0.76rem;
+    margin-bottom: 11px;
   }
 
   .hero h1 {
-    font-size: clamp(2.35rem, 11vw, 3.5rem);
     max-width: 100%;
+    font-size: clamp(2.35rem, 11vw, 3.5rem);
+    line-height: 1.03;
+    margin-bottom: 18px;
   }
 
   .hero p {
     max-width: 100%;
-    font-size: 0.98rem;
+    font-size: 0.96rem;
     line-height: 1.55;
+    margin-bottom: 23px;
   }
 
-  /* Search */
+  .hero p br {
+    display: none;
+  }
+
+  .hero-button {
+    max-width: 100%;
+    padding: 13px 18px;
+  }
+
+  /* ---------- SEARCH ---------- */
+
+  /* On phones the search card becomes part of normal document
+     flow. This removes the large negative-position problem and
+     lets the card grow naturally with the form. */
   .search-container {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
     width: calc(100% - 28px);
-    max-width: none;
-    bottom: -250px;
+    margin: -72px auto 0;
+    z-index: 10;
   }
 
   .search-card {
@@ -835,58 +437,296 @@ span {
 
   .trip-tabs {
     width: 100%;
+    gap: 5px;
+    margin-bottom: 16px;
+    padding-bottom: 11px;
     overflow-x: auto;
+    white-space: nowrap;
     scrollbar-width: thin;
     -webkit-overflow-scrolling: touch;
   }
 
   .trip-tab {
+    flex: 0 0 auto;
     min-height: 42px;
+    padding: 8px 13px;
   }
 
   .flight-form {
-    grid-template-columns: 1fr;
     width: 100%;
+    grid-template-columns: 1fr;
+    gap: 11px;
+    align-items: stretch;
   }
 
   .search-field,
   .field-content,
   .flight-form input,
-  .flight-form select {
+  .flight-form select,
+  .passenger-trigger {
     width: 100%;
+    min-width: 0;
+  }
+
+  .search-field > span {
+    margin-bottom: 6px;
+  }
+
+  .field-content {
     min-width: 0;
   }
 
   .flight-form input,
   .flight-form select {
     height: 47px;
-    font-size: 0.95rem;
+    min-height: 47px;
+    font-size: 0.94rem;
+  }
+
+  /* Keep enough room for the location/calendar icons. */
+  .flight-form input {
+    padding-left: 35px;
+    padding-right: 12px;
+  }
+
+  .flight-form input[type="date"] {
+    padding-right: 8px;
+  }
+
+  .flight-form .search-field:has(select) .field-icon {
+    display: none !important;
+  }
+
+  .flight-form .search-field:has(select) select {
+    padding-left: 12px !important;
+    padding-right: 34px !important;
+  }
+
+  .swap-btn {
+    display: none;
   }
 
   .check-label {
+    grid-column: auto;
     width: 100%;
+    height: auto;
+    min-height: 38px;
+    padding: 5px 0;
   }
 
   .search-btn {
+    grid-column: auto;
     width: 100%;
-    min-height: 47px;
+    min-height: 48px;
+    margin-top: 1px;
   }
 
-  /* Cards / sections */
+  /* ---------- PASSENGER POPUP ---------- */
+
+  .passenger-field {
+    position: relative;
+  }
+
+  .passenger-trigger {
+    height: 47px;
+    min-height: 47px;
+    padding-left: 12px;
+    padding-right: 34px;
+  }
+
+  .passenger-popup {
+    top: calc(100% + 7px);
+    left: 0;
+    right: auto;
+    transform: none;
+    width: min(292px, calc(100vw - 44px));
+    max-width: calc(100vw - 44px);
+    padding: 12px;
+    z-index: 1000;
+  }
+
+  .passenger-row {
+    min-height: 58px;
+    gap: 10px;
+  }
+
+  .passenger-counter {
+    gap: 7px;
+  }
+
+  .passenger-counter button {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+  }
+
+  /* ---------- HERO FEATURES ---------- */
+
+  .hero-features {
+    padding-top: 55px;
+    padding-bottom: 35px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .feature-item {
+    gap: 13px;
+    align-items: flex-start;
+  }
+
+  /* ---------- SECTIONS ---------- */
+
   .section {
     padding: 55px 0;
   }
 
+  .section-heading {
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .section-heading > a {
+    display: inline-block;
+    margin-top: 5px;
+  }
+
+  /* ---------- GRIDS ---------- */
+
+  .destination-grid,
+  .destination-grid.large,
+  .deal-grid,
+  .deal-grid.large,
+  .testimonial-grid,
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
   .destination-image {
-    height: 200px;
+    height: 210px;
   }
 
   .card,
-  .deal-card {
+  .deal-card,
+  .destination-card,
+  .blog-card,
+  .quote {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* ---------- SPLIT / CONTENT ---------- */
+
+  .split {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .feature-list {
     width: 100%;
   }
 
-  /* Footer */
+  /* ---------- FORMS ---------- */
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card,
+  .form-card input,
+  .form-card select,
+  .form-card textarea {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .form-card input,
+  .form-card select,
+  .form-card textarea {
+    font-size: 16px;
+  }
+
+  /* 16px prevents iOS Safari from zooming into form controls. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* ---------- RESULTS ---------- */
+
+  .results-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .results-toolbar select {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .flight-card {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .flight-main {
+    grid-template-columns: 1fr;
+    gap: 9px;
+    text-align: left;
+  }
+
+  .duration,
+  .flight-price {
+    text-align: left;
+  }
+
+  .flight-price strong {
+    font-size: 1.25rem;
+  }
+
+  /* ---------- DETAILS ---------- */
+
+  .detail-route {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .detail-route .time {
+    font-size: 1.7rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .actions .btn {
+    width: 100%;
+  }
+
+  /* ---------- PAGE HERO ---------- */
+
+  .page-hero {
+    padding: 48px 0;
+  }
+
+  /* ---------- FAQ / SUPPORT ---------- */
+
+  .support-topics {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-list {
+    width: 100%;
+  }
+
+  /* ---------- FOOTER ---------- */
+
   .site-footer {
     padding: 50px 0 18px;
   }
@@ -900,34 +740,47 @@ span {
     min-width: 0;
   }
 
+  /* Do NOT apply the navigation logo shift to the footer. */
   .footer-brand {
     width: 150px;
+    height: 58px;
+    transform: none;
   }
 
   .footer-brand img {
+    width: 112px;
+    height: 88px;
     max-width: 112px;
-    height: auto;
   }
 
   .footer-bottom {
+    margin-top: 30px;
     line-height: 1.5;
   }
 
-  /* Chat */
+  /* ---------- CHAT ---------- */
+
   .support-widget {
     right: 14px;
     bottom: 14px;
+  }
+
+  .chat-toggle {
+    width: 55px;
+    height: 55px;
   }
 
   .chat-panel {
     width: min(340px, calc(100vw - 28px));
     max-width: calc(100vw - 28px);
     right: 0;
+    bottom: 68px;
   }
 }
 
 /* =========================================================
-   SMALL MOBILE
+   SMALL PHONES
+   481px - 480px / 480px and below
 ========================================================= */
 
 @media (max-width: 480px) {
@@ -935,12 +788,13 @@ span {
     width: calc(100% - 24px);
   }
 
-  .site-header {
-    width: 100%;
+  .nav-wrap {
+    min-height: 64px;
   }
 
   .brand {
     width: 115px;
+    height: 50px;
   }
 
   .brand img {
@@ -948,38 +802,46 @@ span {
     height: 76px;
   }
 
+  .site-header .brand {
+    transform: none;
+  }
+
+  #mainNav {
+    top: calc(100% + 6px);
+    padding: 12px;
+  }
+
   .hero {
-    min-height: 780px;
-    background-position: 66% center;
+    background-position: 67% center;
   }
 
   .hero-content {
-    min-height: 780px;
     width: calc(100% - 24px);
-    padding-top: 48px;
-    padding-bottom: 335px;
+    min-height: 525px;
+    padding-top: 46px;
+    padding-bottom: 105px;
   }
 
   .hero .eyebrow {
-    font-size: 0.74rem;
+    font-size: 0.72rem;
   }
 
   .hero h1 {
-    font-size: clamp(2.2rem, 12vw, 3.1rem);
+    font-size: clamp(2.15rem, 12vw, 3.05rem);
+    margin-bottom: 17px;
   }
 
   .hero p {
-    font-size: 0.94rem;
+    font-size: 0.92rem;
   }
 
   .hero-button {
-    width: auto;
-    max-width: 100%;
+    padding: 12px 16px;
   }
 
   .search-container {
     width: calc(100% - 24px);
-    bottom: -255px;
+    margin-top: -62px;
   }
 
   .search-card {
@@ -987,7 +849,7 @@ span {
   }
 
   .trip-tabs {
-    margin-bottom: 14px;
+    margin-bottom: 13px;
   }
 
   .trip-tab {
@@ -1000,55 +862,50 @@ span {
   }
 
   .flight-form input,
-  .flight-form select {
+  .flight-form select,
+  .passenger-trigger {
     height: 46px;
+    min-height: 46px;
+  }
+
+  .flight-form input {
     padding-left: 35px;
-    padding-right: 34px;
+  }
+
+  .flight-form .search-field:has(select) select {
+    padding-left: 12px !important;
   }
 
   .search-btn {
-    font-size: 0.95rem;
+    min-height: 46px;
+    font-size: 0.94rem;
+  }
+
+  .passenger-popup {
+    width: min(292px, calc(100vw - 36px));
+    max-width: calc(100vw - 36px);
   }
 
   .hero-features {
-    padding-top: 305px;
+    padding-top: 48px;
   }
 
   .section {
     padding: 50px 0;
   }
 
-  .section-heading {
-    margin-bottom: 20px;
-  }
-
   .destination-image {
     height: 190px;
   }
 
-  .flight-card {
+  .flight-card,
+  .form-card,
+  .card {
     padding: 18px;
-  }
-
-  .flight-main {
-    gap: 10px;
-  }
-
-  .time {
-    font-size: 1.15rem;
   }
 
   .detail-route .time {
     font-size: 1.5rem;
-  }
-
-  .actions .btn {
-    width: 100%;
-  }
-
-  .form-card,
-  .card {
-    padding: 20px;
   }
 
   .chat-toggle {
@@ -1056,10 +913,16 @@ span {
     height: 52px;
     font-size: 22px;
   }
+
+  .chat-panel {
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+  }
 }
 
 /* =========================================================
    VERY SMALL PHONES
+   360px and below
 ========================================================= */
 
 @media (max-width: 360px) {
@@ -1068,7 +931,7 @@ span {
   }
 
   .nav-wrap {
-    min-height: 64px;
+    min-height: 62px;
   }
 
   .brand {
@@ -1081,59 +944,101 @@ span {
     height: 70px;
   }
 
+  .menu-toggle {
+    min-width: 42px;
+    min-height: 42px;
+    padding: 7px;
+  }
+
   #mainNav {
-    top: calc(100% + 6px);
-    left: 10px;
-    right: 10px;
-    padding: 12px;
+    left: 0;
+    right: 0;
+    top: calc(100% + 5px);
+    padding: 10px;
+  }
+
+  #mainNav > a {
+    min-height: 42px;
+    padding: 9px 10px;
+    font-size: 0.88rem;
   }
 
   .hero {
-    min-height: 750px;
-    background-position: 69% center;
+    background-position: 70% center;
   }
 
   .hero-content {
-    min-height: 750px;
     width: calc(100% - 20px);
-    padding-top: 42px;
-    padding-bottom: 320px;
+    min-height: 500px;
+    padding-top: 40px;
+    padding-bottom: 95px;
   }
 
   .hero h1 {
-    font-size: 2.15rem;
+    font-size: 2.05rem;
   }
 
   .hero p {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .search-container {
     width: calc(100% - 20px);
-    bottom: -250px;
+    margin-top: -58px;
   }
 
   .search-card {
     padding: 11px;
+    border-radius: 14px;
   }
 
   .trip-tab {
-    font-size: 0.76rem;
-    padding: 7px 9px;
+    font-size: 0.75rem;
+    padding: 7px 8px;
   }
 
   .flight-form input,
-  .flight-form select {
+  .flight-form select,
+  .passenger-trigger {
     height: 44px;
-    font-size: 0.88rem;
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .flight-form input {
+    padding-left: 35px;
+  }
+
+  .search-btn {
+    min-height: 44px;
+  }
+
+  .passenger-popup {
+    width: calc(100vw - 28px);
+    max-width: calc(100vw - 28px);
+    padding: 10px;
+  }
+
+  .passenger-row {
+    min-height: 55px;
+  }
+
+  .passenger-info strong {
+    font-size: 0.84rem;
+  }
+
+  .passenger-info small {
+    font-size: 0.68rem;
+  }
+
+  .passenger-counter button {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
   }
 
   .hero-features {
-    padding-top: 300px;
-  }
-
-  .feature-item {
-    align-items: flex-start;
+    padding-top: 42px;
   }
 
   .feature-icon {
@@ -1151,11 +1056,13 @@ span {
   }
 
   .footer-brand img {
-    max-width: 100px;
+    width: 100px;
+    height: auto;
   }
 
   .chat-panel {
-    width: calc(100vw - 20px);
-    max-width: calc(100vw - 20px);
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+    right: -4px;
   }
 }
