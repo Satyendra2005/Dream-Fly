@@ -8,20 +8,24 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/responsive.css" />
   </head>
+
   <body>
     <header class="site-header">
       <div class="container nav-wrap">
         <a class="brand" href="index.html">
           <img src="assets/images/logo.png" alt="Dream Fly Logo" />
         </a>
+
         <button class="menu-toggle" id="menuToggle">☰</button>
+
         <nav id="mainNav">
-          <a href="index.html">Home</a><a href="flights.html">Flights</a
-          ><a href="deals.html">Deals</a
-          ><a href="destinations.html">Destinations</a
-          ><a href="airlines.html">Airlines</a><a href="support.html">Support</a
-          ><a href="about.html">About</a
-          ><a class="nav-login" href="contact.html">Contact</a>
+          <a href="index.html">Home</a>
+          <a href="flights.html">Flights</a>
+          <a href="deals.html">Deals</a>
+          <a href="destinations.html">Destinations</a>
+          <a href="support.html">Support</a>
+          <a href="about.html">About</a>
+          <a class="nav-login" href="contact.html">Contact</a>
         </nav>
       </div>
     </header>
@@ -34,20 +38,48 @@
           <p>Send us a message and our support team can review your request.</p>
         </div>
       </section>
+
       <section class="section">
         <div class="container narrow">
           <form id="contactForm" class="card form-card">
-            <label>Name<input required /></label
-            ><label>Email<input type="email" required /></label
-            ><label
-              >Topic<select>
+            <label>
+              Name
+              <input type="text" name="name" required />
+            </label>
+
+            <label>
+              Email
+              <input type="email" name="email" required />
+            </label>
+
+            <label>
+              Mobile Number
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Enter your mobile number"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                required
+              />
+            </label>
+
+            <label>
+              Topic
+              <select name="topic">
                 <option>Booking</option>
                 <option>Payment</option>
                 <option>Refund</option>
                 <option>Other</option>
-              </select></label
-            ><label>Message<textarea rows="6" required></textarea></label
-            ><button class="btn btn-primary" type="submit">
+              </select>
+            </label>
+
+            <label>
+              Message
+              <textarea name="message" rows="6" required></textarea>
+            </label>
+
+            <button class="btn btn-primary" type="submit">
               Submit request
             </button>
           </form>
@@ -61,8 +93,8 @@
 
         <div>
           <a class="brand footer-brand" href="index.html">
-  <img src="assets/images/logo.png" alt="Dream Fly Logo" />
-</a>
+            <img src="assets/images/logo.png" alt="Dream Fly Logo" />
+          </a>
 
           <p>Find your flight. Follow your journey.</p>
         </div>
@@ -72,13 +104,11 @@
         <div>
           <h4>Explore</h4>
 
-          <a href="flights.html"> Flights </a>
+          <a href="flights.html">Flights</a>
 
-          <a href="deals.html"> Deals </a>
+          <a href="deals.html">Deals</a>
 
-          <a href="destinations.html"> Destinations </a>
-
-          <a href="airlines.html"> Airlines </a>
+          <a href="destinations.html">Destinations</a>
         </div>
 
         <!-- HELP -->
@@ -86,13 +116,13 @@
         <div>
           <h4>Help</h4>
 
-          <a href="support.html"> Support </a>
+          <a href="support.html">Support</a>
 
-          <a href="faq.html"> FAQ </a>
+          <a href="faq.html">FAQ</a>
 
-          <a href="contact.html"> Contact </a>
+          <a href="contact.html">Contact</a>
 
-          <a href="blog.html"> Blog </a>
+          <a href="blog.html">Blog</a>
         </div>
 
         <!-- LEGAL -->
@@ -100,13 +130,13 @@
         <div>
           <h4>Legal</h4>
 
-          <a href="privacy-policy.html"> Privacy Policy </a>
+          <a href="privacy-policy.html">Privacy Policy</a>
 
-          <a href="terms.html"> Terms </a>
+          <a href="terms.html">Terms</a>
 
-          <a href="disclaimer.html"> Disclaimer </a>
+          <a href="disclaimer.html">Disclaimer</a>
 
-          <a href="user-agreement.html"> User Agreement </a>
+          <a href="user-agreement.html">User Agreement</a>
         </div>
       </div>
 
@@ -119,23 +149,30 @@
       <button id="chatToggle" class="chat-toggle" aria-label="Open support">
         💬
       </button>
+
       <div id="chatPanel" class="chat-panel">
         <div class="chat-head">
-          <div><strong>Dream Fly Support</strong><small>Quick help</small></div>
+          <div>
+            <strong>Dream Fly Support</strong>
+            <small>Quick help</small>
+          </div>
+
           <button id="chatClose">×</button>
         </div>
+
         <div id="chatBody" class="chat-body">
           <div class="chat-message bot">
             Hi! Choose a common problem and I'll show you the available
             guidance.
           </div>
+
           <div class="chat-options">
-            <button data-chat-topic="booking">🎫 Booking problem</button
-            ><button data-chat-topic="payment">💳 Payment problem</button
-            ><button data-chat-topic="cancel">🔄 Change / cancel</button
-            ><button data-chat-topic="confirmation">📧 Confirmation</button
-            ><button data-chat-topic="refund">💰 Refund</button
-            ><button data-chat-topic="other">❓ Other issue</button>
+            <button data-chat-topic="booking">🎫 Booking problem</button>
+            <button data-chat-topic="payment">💳 Payment problem</button>
+            <button data-chat-topic="cancel">🔄 Change / cancel</button>
+            <button data-chat-topic="confirmation">📧 Confirmation</button>
+            <button data-chat-topic="refund">💰 Refund</button>
+            <button data-chat-topic="other">❓ Other issue</button>
           </div>
         </div>
       </div>
