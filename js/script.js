@@ -148,25 +148,65 @@ document.addEventListener("DOMContentLoaded", () => {
   menu?.addEventListener("click", () => {
     nav.classList.toggle("open");
   });
+  /* =========================
+   TRIP TYPE
+========================= */
+
+  const tripTabs = qsa(".trip-tab");
+  const returnWrap = qs("#returnWrap");
+
+  function updateTripType(button) {
+    if (!button) return;
+
+    /* Remove active state from all tabs */
+    tripTabs.forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    /* Add active state to selected tab */
+    button.classList.add("active");
+
+    /* Show Return only for Round Trip / Multi-City */
+    if (returnWrap) {
+      if (button.dataset.trip === "one") {
+        returnWrap.style.display = "none";
+
+        /* Clear return date for One Way */
+        const returnDate = qs("#returnDate");
+
+        if (returnDate) {
+          returnDate.value = "";
+        }
+      } else {
+        returnWrap.style.display = "block";
+      }
+    }
+  }
 
   /* =========================
-     TRIP TYPE
-  ========================= */
+   INITIAL STATE
+========================= */
 
-  qsa(".trip-tab").forEach((button) => {
+  /*
+   One Way is active when the website opens,
+   so hide Return immediately.
+*/
+
+  const activeTrip = qs(".trip-tab.active");
+
+  if (activeTrip) {
+    updateTripType(activeTrip);
+  } else if (tripTabs.length > 0) {
+    updateTripType(tripTabs[0]);
+  }
+
+  /* =========================
+   TRIP TAB CLICK
+========================= */
+
+  tripTabs.forEach((button) => {
     button.addEventListener("click", () => {
-      qsa(".trip-tab").forEach((item) => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-
-      const returnWrap = qs("#returnWrap");
-
-      if (returnWrap) {
-        returnWrap.style.display =
-          button.dataset.trip === "one" ? "none" : "block";
-      }
+      updateTripType(button);
     });
   });
 
@@ -645,8 +685,11 @@ document.addEventListener("DOMContentLoaded", () => {
      CHAT WIDGET
   ========================= */
 
-  const chatToggle = qs("#chatToggle");
+  /* =========================
+   CHAT WIDGET
+========================= */
 
+  const chatToggle = qs("#chatToggle");
   const chatPanel = qs("#chatPanel");
 
   chatToggle?.addEventListener("click", () => {
@@ -657,68 +700,172 @@ document.addEventListener("DOMContentLoaded", () => {
     chatPanel.classList.remove("open");
   });
 
-  qsa("[data-chat-topic]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const body = qs("#chatBody");
+  /* =========================
+   SUPPORT CHAT FUNCTIONS
+========================= */
 
-      const answer =
-        supportAnswers[button.dataset.chatTopic] || supportAnswers.other;
+  function showChatHome() {
+    const body = qs("#chatBody");
 
+    if (!body) return;
+
+    body.innerHTML = `
+    <div class="chat-message bot">
+      Hi! Choose a common problem and I'll show you the available guidance.
+    </div>
+
+    <div class="chat-options">
+
+      <button data-chat-topic="booking">
+        🎫 Booking problem
+      </button>
+
+      <button data-chat-topic="payment">
+        💳 Payment problem
+      </button>
+
+      <button data-chat-topic="cancel">
+        🔄 Change / cancel
+      </button>
+
+      <button data-chat-topic="confirmation">
+        📧 Confirmation
+      </button>
+
+      <button data-chat-topic="refund">
+        💰 Refund
+      </button>
+
+      <button data-chat-topic="other">
+        ❓ Other issue
+      </button>
+
+    </div>
+  `;
+
+    attachChatTopicEvents();
+  }
+
+  /* =========================
+   SHOW CHAT ANSWER
+========================= */
+
+  function showChatAnswer(topic) {
+    const body = qs("#chatBody");
+
+    if (!body) return;
+
+    const answer = supportAnswers[topic] || supportAnswers.other;
+
+    body.innerHTML = `
+    <button class="chat-back-btn" id="chatBack">
+      ← Back
+    </button>
+
+    <div class="chat-message bot">
+
+      <strong>
+        ${answer[0]}
+      </strong>
+
+      <br><br>
+
+      ${answer[1]}
+
+    </div>
+
+    <div class="chat-message bot">
+      Was this helpful?
+    </div>
+
+    <div class="chat-options">
+
+      <button id="chatYes">
+        👍 Yes
+      </button>
+
+      <button id="chatNo">
+        👎 No
+      </button>
+
+    </div>
+  `;
+
+    /* =========================
+     BACK BUTTON
+  ========================= */
+
+    qs("#chatBack")?.addEventListener("click", () => {
+      showChatHome();
+    });
+
+    /* =========================
+     YES BUTTON
+  ========================= */
+
+    qs("#chatYes")?.addEventListener("click", () => {
       body.innerHTML = `
-            <div class="chat-message bot">
+      <button class="chat-back-btn" id="chatBack">
+        ← Back
+      </button>
 
-              <strong>
-                ${answer[0]}
-              </strong>
+      <div class="chat-message bot">
+        Great! Happy to help. ✈️
+      </div>
+    `;
 
-              <br>
-
-              ${answer[1]}
-
-            </div>
-
-            <div class="chat-message bot">
-              Was this helpful?
-            </div>
-
-            <div class="chat-options">
-
-              <button id="chatYes">
-                👍 Yes
-              </button>
-
-              <button id="chatNo">
-                👎 No
-              </button>
-
-            </div>
-          `;
-
-      qs("#chatYes")?.addEventListener("click", () => {
-        body.innerHTML = `
-                <div class="chat-message bot">
-                  Great! Happy to help. ✈️
-                </div>
-              `;
-      });
-
-      qs("#chatNo")?.addEventListener("click", () => {
-        body.innerHTML = `
-                <div class="chat-message bot">
-                  No problem. A service agent
-                  can help with your issue.
-                </div>
-
-                <a
-                  class="btn btn-primary full"
-                  href="contact.html"
-                >
-                  Contact service team
-                </a>
-              `;
+      qs("#chatBack")?.addEventListener("click", () => {
+        showChatAnswer(topic);
       });
     });
-  });
+
+    /* =========================
+     NO BUTTON
+  ========================= */
+
+    qs("#chatNo")?.addEventListener("click", () => {
+      body.innerHTML = `
+      <button class="chat-back-btn" id="chatBack">
+        ← Back
+      </button>
+
+      <div class="chat-message bot">
+        No problem. A service agent can help with your issue.
+      </div>
+
+      <a
+        class="btn btn-primary full"
+        href="contact.html"
+      >
+        Contact service team
+      </a>
+    `;
+
+      qs("#chatBack")?.addEventListener("click", () => {
+        showChatAnswer(topic);
+      });
+    });
+  }
+
+  /* =========================
+   CHAT TOPIC EVENTS
+========================= */
+
+  function attachChatTopicEvents() {
+    qsa("[data-chat-topic]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const topic = button.dataset.chatTopic;
+
+        showChatAnswer(topic);
+      });
+    });
+  }
+
+  /* =========================
+   INITIAL CHAT EVENTS
+========================= */
+
+  attachChatTopicEvents();
 
   /* =========================
      CONTACT FORM

@@ -2129,3 +2129,43 @@ h3 {
 .deal-card .btn {
   color: #fff !important;
 }
+/* =========================================================
+   SUPPORT CHAT BACK BUTTON
+========================================================= */
+
+.chat-back-btn {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: flex-start;
+
+  padding: 10px 12px;
+
+  margin-bottom: 10px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: var(--primary);
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  border-radius: 8px;
+
+  transition: background 0.2s ease;
+}
+
+.chat-back-btn:hover {
+  background: var(--soft);
+}
+
+.chat-back-btn:active {
+  transform: translateX(-2px);
+}
