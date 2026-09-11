@@ -109,232 +109,276 @@
 
               <!-- SEARCH FORM -->
 
-              <form id="flightSearchForm" class="flight-form">
-                <!-- FROM -->
+<form id="flightSearchForm" class="flight-form">
+  <!-- FROM -->
 
-                <label class="search-field">
-                  <span>From</span>
+  <label
+    class="search-field standard-flight-field"
+    id="standardFromField"
+  >
+    <span>From</span>
 
-                  <div class="field-content">
-                    <span class="field-icon"> ⌖ </span>
+    <div class="field-content">
+      <span class="field-icon">⌖</span>
 
-                    <input
-                      id="from"
-                      type="text"
-                      placeholder="Delhi (DEL)"
-                      autocomplete="off"
-                      required
-                    />
-                  </div>
-                </label>
+      <input
+        id="from"
+        type="text"
+        placeholder="Delhi (DEL)"
+        autocomplete="off"
+        required
+      />
+    </div>
+  </label>
 
-                <!-- SWAP -->
+  <!-- SWAP -->
 
-                <button
-                  type="button"
-                  class="swap-btn"
-                  id="swapAirports"
-                  aria-label="Swap airports"
-                  title="Swap airports"
-                >
-                  ⇄
-                </button>
+  <button
+    type="button"
+    class="swap-btn standard-flight-field"
+    id="swapAirports"
+    aria-label="Swap airports"
+    title="Swap airports"
+  >
+    ⇄
+  </button>
 
-                <!-- TO -->
+  <!-- TO -->
 
-                <label class="search-field">
-                  <span>To</span>
+  <label
+    class="search-field standard-flight-field"
+    id="standardToField"
+  >
+    <span>To</span>
 
-                  <div class="field-content">
-                    <span class="field-icon"> ⌖ </span>
+    <div class="field-content">
+      <span class="field-icon">⌖</span>
 
-                    <input
-                      id="to"
-                      type="text"
-                      placeholder="Dubai (DXB)"
-                      autocomplete="off"
-                      required
-                    />
-                  </div>
-                </label>
+      <input
+        id="to"
+        type="text"
+        placeholder="Dubai (DXB)"
+        autocomplete="off"
+        required
+      />
+    </div>
+  </label>
 
-                <!-- DEPARTURE -->
+  <!-- DEPARTURE -->
 
-                <label class="search-field">
-                  <span>Departure</span>
+  <label
+    class="search-field standard-flight-field"
+    id="standardDepartureField"
+  >
+    <span>Departure</span>
 
-                  <div class="field-content">
-                    <span class="field-icon"> ▣ </span>
+    <div class="field-content">
+      <span class="field-icon">▣</span>
 
-                    <input id="departure" type="date" required />
-                  </div>
-                </label>
+      <input
+        id="departure"
+        type="date"
+        required
+      />
+    </div>
+  </label>
 
-                <!-- RETURN -->
+  <!-- RETURN -->
 
-                <label class="search-field" id="returnWrap">
-                  <span>Return</span>
+  <label
+    class="search-field standard-flight-field"
+    id="returnWrap"
+  >
+    <span>Return</span>
 
-                  <div class="field-content">
-                    <span class="field-icon"> ▣ </span>
+    <div class="field-content">
+      <span class="field-icon">▣</span>
 
-                    <input id="returnDate" type="date" />
-                  </div>
-                </label>
+      <input
+        id="returnDate"
+        type="date"
+      />
+    </div>
+  </label>
 
-                <!-- PASSENGERS -->
+  <!-- MULTI-CITY FLIGHTS -->
 
-                <!-- PASSENGERS -->
+  <div
+    class="multi-city-fields"
+    id="multiCityFields"
+    hidden
+  >
+    <div
+      class="multi-city-rows"
+      id="multiCityRows"
+    ></div>
 
-                <label class="search-field passenger-field">
-                  <span>Passengers</span>
+    <button
+      type="button"
+      class="add-flight-btn"
+      id="addFlightBtn"
+    >
+      <span aria-hidden="true">+</span>
+      Add flight
+    </button>
+  </div>
 
-                  <div class="field-content">
-                    <button
-                      type="button"
-                      class="passenger-trigger"
-                      id="passengerTrigger"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                    >
-                      <span class="passenger-icon">♙</span>
-                      <span id="passengerSummary">1 Traveler</span>
-                      <span class="passenger-arrow">⌄</span>
-                    </button>
+  <!-- PASSENGERS -->
 
-                    <div class="passenger-popup" id="passengerPopup">
-                      <div class="passenger-row">
-                        <div class="passenger-info">
-                          <strong>Adult</strong>
-                          <small>12+ years</small>
-                        </div>
+  <label class="search-field passenger-field">
+    <span>Passengers</span>
 
-                        <div class="passenger-counter">
-                          <button
-                            type="button"
-                            class="passenger-minus"
-                            data-type="adult"
-                          >
-                            −
-                          </button>
+    <div class="field-content">
+      <button
+        type="button"
+        class="passenger-trigger"
+        id="passengerTrigger"
+        aria-expanded="false"
+        aria-haspopup="true"
+      >
+        <span class="passenger-icon">♙</span>
+        <span id="passengerSummary">1 Traveler</span>
+        <span class="passenger-arrow">⌄</span>
+      </button>
 
-                          <span id="adultCount">1</span>
+      <div
+        class="passenger-popup"
+        id="passengerPopup"
+      >
+        <div class="passenger-row">
+          <div class="passenger-info">
+            <strong>Adult</strong>
+            <small>12+ years</small>
+          </div>
 
-                          <button
-                            type="button"
-                            class="passenger-plus"
-                            data-type="adult"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
+          <div class="passenger-counter">
+            <button
+              type="button"
+              class="passenger-minus"
+              data-type="adult"
+            >
+              −
+            </button>
 
-                      <div class="passenger-row">
-                        <div class="passenger-info">
-                          <strong>Child</strong>
-                          <small>2–11 years</small>
-                        </div>
+            <span id="adultCount">1</span>
 
-                        <div class="passenger-counter">
-                          <button
-                            type="button"
-                            class="passenger-minus"
-                            data-type="child"
-                          >
-                            −
-                          </button>
+            <button
+              type="button"
+              class="passenger-plus"
+              data-type="adult"
+            >
+              +
+            </button>
+          </div>
+        </div>
 
-                          <span id="childCount">0</span>
+        <div class="passenger-row">
+          <div class="passenger-info">
+            <strong>Child</strong>
+            <small>2–11 years</small>
+          </div>
 
-                          <button
-                            type="button"
-                            class="passenger-plus"
-                            data-type="child"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
+          <div class="passenger-counter">
+            <button
+              type="button"
+              class="passenger-minus"
+              data-type="child"
+            >
+              −
+            </button>
 
-                      <div class="passenger-row">
-                        <div class="passenger-info">
-                          <strong>Infant</strong>
-                          <small>0–2 years</small>
-                        </div>
+            <span id="childCount">0</span>
 
-                        <div class="passenger-counter">
-                          <button
-                            type="button"
-                            class="passenger-minus"
-                            data-type="infant"
-                          >
-                            −
-                          </button>
+            <button
+              type="button"
+              class="passenger-plus"
+              data-type="child"
+            >
+              +
+            </button>
+          </div>
+        </div>
 
-                          <span id="infantCount">0</span>
+        <div class="passenger-row">
+          <div class="passenger-info">
+            <strong>Infant</strong>
+            <small>0–2 years</small>
+          </div>
 
-                          <button
-                            type="button"
-                            class="passenger-plus"
-                            data-type="infant"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
+          <div class="passenger-counter">
+            <button
+              type="button"
+              class="passenger-minus"
+              data-type="infant"
+            >
+              −
+            </button>
 
-                      <div class="passenger-popup-footer">
-                        <span id="passengerTotal">1 Traveler</span>
+            <span id="infantCount">0</span>
 
-                        <button
-                          type="button"
-                          class="passenger-done"
-                          id="passengerDone"
-                        >
-                          Done
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </label>
+            <button
+              type="button"
+              class="passenger-plus"
+              data-type="infant"
+            >
+              +
+            </button>
+          </div>
+        </div>
 
-                <!-- CLASS -->
+        <div class="passenger-popup-footer">
+          <span id="passengerTotal">1 Traveler</span>
 
-                <label class="search-field">
-                  <span>Class</span>
+          <button
+            type="button"
+            class="passenger-done"
+            id="passengerDone"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </label>
 
-                  <div class="field-content">
-                    <span class="field-icon"> ♧ </span>
+  <!-- CLASS -->
 
-                    <select id="cabin">
-                      <option>Economy</option>
+  <label class="search-field">
+    <span>Class</span>
 
-                      <option>Premium Economy</option>
+    <div class="field-content">
+      <span class="field-icon">♧</span>
 
-                      <option>Business</option>
+      <select id="cabin">
+        <option>Economy</option>
+        <option>Premium Economy</option>
+        <option>Business</option>
+        <option>First Class</option>
+      </select>
+    </div>
+  </label>
 
-                      <option>First Class</option>
-                    </select>
-                  </div>
-                </label>
+  <!-- NONSTOP -->
 
-                <!-- NONSTOP -->
+  <label class="check-label">
+    <input
+      id="nonstop"
+      type="checkbox"
+    />
 
-                <label class="check-label">
-                  <input id="nonstop" type="checkbox" />
+    <span>Nonstop only</span>
+  </label>
 
-                  <span> Nonstop only </span>
-                </label>
+  <!-- SEARCH BUTTON -->
 
-                <!-- SEARCH BUTTON -->
-
-                <button type="submit" class="btn btn-primary search-btn">
-                  <span class="search-icon"> ⌕ </span>
-
-                  Search Flights
-                </button>
-              </form>
+  <button
+    type="submit"
+    class="btn btn-primary search-btn"
+  >
+    <span class="search-icon">⌕</span>
+    Search Flights
+  </button>
+</form>
             </div>
           </div>
         </section>

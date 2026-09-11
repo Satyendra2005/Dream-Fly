@@ -2169,3 +2169,614 @@ h3 {
 .chat-back-btn:active {
   transform: translateX(-2px);
 }
+/* =========================================================
+   GOOGLE FLIGHTS STYLE — MULTI-CITY
+   Dream Fly
+   Corrected Layout
+========================================================= */
+
+/* Multi-city container */
+
+.multi-city-fields {
+  width: 100%;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0;
+}
+
+.multi-city-fields[hidden] {
+  display: none !important;
+}
+
+/* Flight rows */
+
+.multi-city-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Individual flight card */
+
+.multi-city-row {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+/* Flight title */
+
+.multi-city-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 9px;
+}
+
+.multi-city-row-header strong {
+  color: var(--ink);
+
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+/* Flight fields */
+
+.multi-city-row-fields {
+  display: grid;
+
+  grid-template-columns:
+    1.35fr
+    1.35fr
+    1fr;
+
+  gap: 10px;
+
+  width: 100%;
+}
+
+/* Labels */
+
+.multi-city-row .search-field {
+  min-width: 0;
+}
+
+.multi-city-row .search-field > span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #52627a;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* Field content */
+
+.multi-city-row .field-content {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+}
+
+/* Icons */
+
+.multi-city-row .field-icon {
+  position: absolute;
+
+  left: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--primary);
+
+  font-size: 15px;
+
+  line-height: 1;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+/* Inputs */
+
+.multi-city-row input {
+  display: block;
+
+  width: 100%;
+  height: 47px;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  margin: 0;
+
+  padding: 10px 12px 10px 35px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: var(--ink);
+
+  font: inherit;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.multi-city-row input::placeholder {
+  color: #8b98aa;
+}
+
+.multi-city-row input:focus {
+  border-color: var(--primary);
+
+  box-shadow: 0 0 0 3px rgba(23, 105, 255, 0.08);
+}
+
+/* =========================================================
+   ADD FLIGHT
+========================================================= */
+
+.add-flight-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  margin-top: 12px;
+
+  padding: 9px 16px;
+
+  min-height: 42px;
+
+  border: 1px solid var(--primary);
+
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  color: var(--primary);
+
+  font: inherit;
+
+  font-size: 0.9rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.add-flight-btn span {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.add-flight-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.add-flight-btn:active {
+  transform: scale(0.98);
+}
+
+.add-flight-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.add-flight-btn:disabled:hover {
+  background: #ffffff;
+  color: var(--primary);
+}
+
+/* =========================================================
+   REMOVE FLIGHT
+========================================================= */
+
+.remove-flight-btn {
+  width: 30px;
+  height: 30px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #718096;
+
+  font-size: 22px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.remove-flight-btn:hover {
+  background: #f3f5f8;
+  color: #d32f2f;
+}
+
+/* =========================================================
+   MULTI-CITY FORM LAYOUT
+   Keeps passengers/class/search at the bottom
+========================================================= */
+
+.flight-form:has(.multi-city-fields:not([hidden])) {
+  grid-template-columns:
+    1.25fr
+    1.25fr
+    1fr
+    1fr
+    auto;
+
+  align-items: end;
+}
+
+/* Multi-city fields always occupy full row */
+
+.flight-form:has(.multi-city-fields:not([hidden])) .multi-city-fields {
+  grid-column: 1 / -1;
+}
+
+/* Passenger */
+
+.flight-form:has(.multi-city-fields:not([hidden])) .passenger-field {
+  grid-column: 1 / 2;
+}
+
+/* Class */
+
+.flight-form:has(.multi-city-fields:not([hidden]))
+  .passenger-field
+  + .search-field {
+  grid-column: 2 / 3;
+}
+
+/* Nonstop */
+
+.flight-form:has(.multi-city-fields:not([hidden])) .check-label {
+  grid-column: 3 / 4;
+
+  align-self: center;
+
+  margin-bottom: 12px;
+}
+
+/* Search */
+
+.flight-form:has(.multi-city-fields:not([hidden])) .search-btn {
+  grid-column: 4 / -1;
+
+  width: 100%;
+}
+
+/* =========================================================
+   MULTI-CITY CARD SPACE
+========================================================= */
+
+.flight-form:has(.multi-city-fields:not([hidden])) {
+  row-gap: 12px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) {
+  .multi-city-row-fields {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+  .multi-city-row-fields .search-field:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .flight-form:has(.multi-city-fields:not([hidden])) {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+  .flight-form:has(.multi-city-fields:not([hidden])) .passenger-field,
+  .flight-form:has(.multi-city-fields:not([hidden]))
+    .passenger-field
+    + .search-field,
+  .flight-form:has(.multi-city-fields:not([hidden])) .check-label,
+  .flight-form:has(.multi-city-fields:not([hidden])) .search-btn {
+    grid-column: auto;
+  }
+
+  .flight-form:has(.multi-city-fields:not([hidden])) .search-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .multi-city-fields {
+    width: 100%;
+  }
+
+  .multi-city-row {
+    padding: 10px;
+  }
+
+  .multi-city-row-fields {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+  }
+
+  .multi-city-row-fields .search-field:last-child {
+    grid-column: auto;
+  }
+
+  .multi-city-row input {
+    width: 100%;
+  }
+
+  .add-flight-btn {
+    width: 100%;
+  }
+
+  .flight-form:has(.multi-city-fields:not([hidden])) {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 10px;
+  }
+
+  .flight-form:has(.multi-city-fields:not([hidden])) .passenger-field,
+  .flight-form:has(.multi-city-fields:not([hidden])) .search-field,
+  .flight-form:has(.multi-city-fields:not([hidden])) .check-label,
+  .flight-form:has(.multi-city-fields:not([hidden])) .search-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 480px) {
+  .multi-city-row {
+    padding: 9px;
+    border-radius: 10px;
+  }
+
+  .multi-city-row input {
+    height: 46px;
+
+    padding-left: 35px;
+    padding-right: 12px;
+  }
+
+  .multi-city-row .field-icon {
+    left: 11px;
+  }
+
+  .multi-city-row-header strong {
+    font-size: 0.85rem;
+  }
+
+  .add-flight-btn {
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   MULTI-CITY — KEEP SEARCH CARD ANCHORED FROM TOP
+   Prevents the card from expanding upward
+========================================================= */
+
+@media (min-width: 701px) {
+  /*
+    Normal One Way / Round Trip positioning remains unchanged.
+
+    Only when Multi-City is active, the search container
+    becomes top-anchored so additional flight rows expand
+    downward.
+  */
+
+  .search-container:has(.multi-city-fields:not([hidden])) {
+    bottom: auto;
+
+    top: 240px;
+
+    transform: translateX(-50%);
+  }
+
+  /*
+    Keep the search card itself fully visible and
+    professionally spaced.
+  */
+
+  .search-container:has(.multi-city-fields:not([hidden])) .search-card {
+    margin-bottom: 0;
+  }
+}
+
+/* =========================================================
+   MULTI-CITY — LARGE SCREENS
+========================================================= */
+
+@media (min-width: 1200px) {
+  .search-container:has(.multi-city-fields:not([hidden])) {
+    top: 240px;
+  }
+}
+
+/* =========================================================
+   MULTI-CITY — TABLETS
+========================================================= */
+
+@media (min-width: 701px) and (max-width: 1199px) {
+  .search-container:has(.multi-city-fields:not([hidden])) {
+    top: 225px;
+  }
+}
+
+/* =========================================================
+   MULTI-CITY — PROFESSIONAL UI POLISH
+========================================================= */
+
+.multi-city-fields {
+  animation: multiCityOpen 0.22s ease-out;
+}
+
+.multi-city-row {
+  position: relative;
+
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.multi-city-row:hover {
+  border-color: #d7dee8;
+
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.multi-city-row-header strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.multi-city-row-header strong::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+  flex-shrink: 0;
+}
+
+/* Keep the Add Flight action visually connected
+   to the flight rows */
+
+.add-flight-btn {
+  position: relative;
+
+  margin-left: 2px;
+
+  background: #ffffff;
+}
+
+.add-flight-btn::before {
+  content: "";
+
+  position: absolute;
+
+  left: 18px;
+  top: -13px;
+
+  width: 1px;
+  height: 12px;
+
+  background: #dce3ec;
+}
+
+/* Better spacing before the bottom controls */
+
+.flight-form:has(.multi-city-fields:not([hidden])) .passenger-field {
+  margin-top: 2px;
+}
+
+/* =========================================================
+   OPEN ANIMATION
+========================================================= */
+
+@keyframes multiCityOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .multi-city-row:hover {
+    transform: none;
+
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  }
+
+  .add-flight-btn {
+    margin-left: 0;
+  }
+
+  .add-flight-btn::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

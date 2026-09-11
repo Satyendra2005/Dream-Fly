@@ -148,49 +148,515 @@ document.addEventListener("DOMContentLoaded", () => {
   menu?.addEventListener("click", () => {
     nav.classList.toggle("open");
   });
+
   /* =========================
-   TRIP TYPE
-========================= */
+     TRIP TYPE
+  ========================= */
 
   const tripTabs = qsa(".trip-tab");
   const returnWrap = qs("#returnWrap");
+  const multiCityFields = qs("#multiCityFields");
+  const multiCityRows = qs("#multiCityRows");
+  const addFlightBtn = qs("#addFlightBtn");
+
+  /*
+    Multi-city flight data.
+
+    Each item represents one flight leg:
+    Flight 1: From → To + Date
+    Flight 2: From → To + Date
+    etc.
+  */
+
+  let multiCityFlights = [];
+
+  const MAX_MULTI_CITY_FLIGHTS = 6;
+
+  /* =========================
+     CREATE MULTI-CITY ROW
+  ========================= */
+
+  const createMultiCityRow = (index) => {
+    const row = document.createElement("div");
+
+    row.className = "multi-city-row";
+
+    row.dataset.flightIndex = index;
+
+    row.innerHTML = `
+      <div class="multi-city-row-header">
+        <strong>Flight ${index + 1}</strong>
+
+        ${
+          index > 0
+            ? `
+              <button
+                type="button"
+                class="remove-flight-btn"
+                data-remove-flight="${index}"
+                aria-label="Remove flight ${index + 1}"
+                title="Remove flight"
+              >
+                ×
+              </button>
+            `
+            : ""
+        }
+      </div>
+
+      <div class="multi-city-row-fields">
+
+        <label class="search-field">
+          <span>From</span>
+
+          <div class="field-content">
+            <span class="field-icon">⌖</span>
+
+            <input
+              type="text"
+              class="multi-city-from"
+              data-field="from"
+              data-index="${index}"
+              placeholder="City or airport"
+              autocomplete="off"
+              required
+            />
+          </div>
+        </label>
+
+        <label class="search-field">
+          <span>To</span>
+
+          <div class="field-content">
+            <span class="field-icon">⌖</span>
+
+            <input
+              type="text"
+              class="multi-city-to"
+              data-field="to"
+              data-index="${index}"
+              placeholder="City or airport"
+              autocomplete="off"
+              required
+            />
+          </div>
+        </label>
+
+        <label class="search-field">
+          <span>Departure</span>
+
+          <div class="field-content">
+            <span class="field-icon">▣</span>
+
+            <input
+              type="date"
+              class="multi-city-date"
+              data-field="date"
+              data-index="${index}"
+              required
+            />
+          </div>
+        </label>
+
+      </div>
+    `;
+
+    return row;
+  };
+
+  /* =========================
+     RENDER MULTI-CITY ROWS
+  ========================= */
+
+  const renderMultiCityRows = () => {
+    if (!multiCityRows) return;
+
+    multiCityRows.innerHTML = "";
+
+    multiCityFlights.forEach((flight, index) => {
+      const row = createMultiCityRow(index);
+
+      multiCityRows.appendChild(row);
+
+      const fromInput = row.querySelector(".multi-city-from");
+      const toInput = row.querySelector(".multi-city-to");
+      const dateInput = row.querySelector(".multi-city-date");
+
+      if (fromInput) {
+        fromInput.value = flight.from || "";
+      }
+
+      if (toInput) {
+        toInput.value = flight.to || "";
+      }
+
+      if (dateInput) {
+        dateInput.value = flight.date || "";
+      }
+    });
+
+    updateAddFlightButton();
+
+    /*
+      Attach input events after rendering.
+    */
+
+    qsa(".multi-city-from").forEach((input) => {
+      input.addEventListener("input", () => {
+        const index = Number(input.dataset.index);
+
+        if (!multiCityFlights[index]) return;
+
+        multiCityFlights[index].from = input.value;
+
+        /*
+          If this is the From field of a flight after Flight 1,
+          keep the previous destination synchronized.
+        */
+
+        if (index > 0) {
+          const previousFlight = multiCityFlights[index - 1];
+
+          if (previousFlight) {
+            previousFlight.to = input.value;
+          }
+        }
+      });
+
+      input.addEventListener("blur", () => {
+        const index = Number(input.dataset.index);
+
+        if (index < 0) return;
+
+        /*
+          Automatically use the previous flight's destination
+          as the current flight's origin.
+        */
+
+        if (index > 0 && !input.value.trim()) {
+          const previousFlight = multiCityFlights[index - 1];
+
+          if (previousFlight?.to) {
+            input.value = previousFlight.to;
+            multiCityFlights[index].from = previousFlight.to;
+          }
+        }
+      });
+    });
+
+    qsa(".multi-city-to").forEach((input) => {
+      input.addEventListener("input", () => {
+        const index = Number(input.dataset.index);
+
+        if (!multiCityFlights[index]) return;
+
+        multiCityFlights[index].to = input.value;
+
+        /*
+          Automatically carry this destination into
+          the next flight's origin.
+        */
+
+        if (index + 1 < multiCityFlights.length) {
+          multiCityFlights[index + 1].from = input.value;
+
+          const nextFrom = qs(`.multi-city-from[data-index="${index + 1}"]`);
+
+          if (nextFrom) {
+            nextFrom.value = input.value;
+          }
+        }
+      });
+    });
+
+    qsa(".multi-city-date").forEach((input) => {
+      input.addEventListener("change", () => {
+        const index = Number(input.dataset.index);
+
+        if (!multiCityFlights[index]) return;
+
+        multiCityFlights[index].date = input.value;
+
+        /*
+          The next flight cannot depart before
+          the previous flight.
+        */
+
+        if (index + 1 < multiCityFlights.length) {
+          const nextDate = qs(`.multi-city-date[data-index="${index + 1}"]`);
+
+          if (nextDate && input.value) {
+            nextDate.min = input.value;
+
+            if (nextDate.value && nextDate.value < input.value) {
+              nextDate.value = input.value;
+
+              multiCityFlights[index + 1].date = input.value;
+            }
+          }
+        }
+      });
+    });
+
+    /*
+      Remove buttons.
+    */
+
+    qsa("[data-remove-flight]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = Number(button.dataset.removeFlight);
+
+        if (Number.isNaN(index)) return;
+
+        removeMultiCityFlight(index);
+      });
+    });
+
+    /*
+      Set minimum dates for each subsequent flight.
+    */
+
+    for (let index = 1; index < multiCityFlights.length; index++) {
+      const previousFlight = multiCityFlights[index - 1];
+
+      const currentDate = qs(`.multi-city-date[data-index="${index}"]`);
+
+      if (currentDate && previousFlight?.date) {
+        currentDate.min = previousFlight.date;
+      }
+    }
+  };
+
+  /* =========================
+     ADD MULTI-CITY FLIGHT
+  ========================= */
+
+  const addMultiCityFlight = () => {
+    if (multiCityFlights.length >= MAX_MULTI_CITY_FLIGHTS) {
+      toast(`You can add up to ${MAX_MULTI_CITY_FLIGHTS} flights.`);
+      return;
+    }
+
+    const previousFlight = multiCityFlights[multiCityFlights.length - 1];
+
+    const newFlight = {
+      from: previousFlight?.to || "",
+      to: "",
+      date: previousFlight?.date || "",
+    };
+
+    multiCityFlights.push(newFlight);
+
+    renderMultiCityRows();
+
+    /*
+      Focus the new From field.
+    */
+
+    const newIndex = multiCityFlights.length - 1;
+
+    const newFrom = qs(`.multi-city-from[data-index="${newIndex}"]`);
+
+    newFrom?.focus();
+  };
+
+  /* =========================
+     REMOVE MULTI-CITY FLIGHT
+  ========================= */
+
+  const removeMultiCityFlight = (index) => {
+    /*
+      Flight 1 cannot be removed.
+    */
+
+    if (index <= 0) {
+      return;
+    }
+
+    multiCityFlights.splice(index, 1);
+
+    /*
+      After removing a row, keep the route chain connected.
+    */
+
+    for (let i = 1; i < multiCityFlights.length; i++) {
+      if (multiCityFlights[i - 1].to && !multiCityFlights[i].from) {
+        multiCityFlights[i].from = multiCityFlights[i - 1].to;
+      }
+    }
+
+    renderMultiCityRows();
+  };
+
+  /* =========================
+     ADD FLIGHT BUTTON
+  ========================= */
+
+  addFlightBtn?.addEventListener("click", () => {
+    addMultiCityFlight();
+  });
+
+  /* =========================
+     UPDATE ADD BUTTON
+  ========================= */
+
+  const updateAddFlightButton = () => {
+    if (!addFlightBtn) return;
+
+    if (multiCityFlights.length >= MAX_MULTI_CITY_FLIGHTS) {
+      addFlightBtn.disabled = true;
+      addFlightBtn.innerHTML = `
+        <span aria-hidden="true">✓</span>
+        Maximum flights added
+      `;
+    } else {
+      addFlightBtn.disabled = false;
+      addFlightBtn.innerHTML = `
+        <span aria-hidden="true">+</span>
+        Add flight
+      `;
+    }
+  };
+
+  /* =========================
+     START MULTI-CITY
+  ========================= */
+
+  const initializeMultiCity = () => {
+    multiCityFlights = [
+      {
+        from: qs("#from")?.value || "",
+        to: qs("#to")?.value || "",
+        date: qs("#departure")?.value || "",
+      },
+    ];
+
+    renderMultiCityRows();
+
+    if (multiCityFields) {
+      multiCityFields.hidden = false;
+    }
+
+    /*
+      Hide the standard From/To/Departure fields.
+    */
+
+    qs("#standardFromField")?.style &&
+      (qs("#standardFromField").style.display = "none");
+
+    qs("#standardToField")?.style &&
+      (qs("#standardToField").style.display = "none");
+
+    qs("#standardDepartureField")?.style &&
+      (qs("#standardDepartureField").style.display = "none");
+
+    /*
+      Hide swap button.
+    */
+
+    qs("#swapAirports")?.style && (qs("#swapAirports").style.display = "none");
+
+    /*
+      Hide Return because Multi-City uses
+      individual departure dates.
+    */
+
+    if (returnWrap) {
+      returnWrap.style.display = "none";
+    }
+  };
+
+  /* =========================
+     EXIT MULTI-CITY
+  ========================= */
+
+  const disableMultiCity = () => {
+    if (multiCityFields) {
+      multiCityFields.hidden = true;
+    }
+
+    qs("#standardFromField")?.style &&
+      (qs("#standardFromField").style.display = "");
+
+    qs("#standardToField")?.style &&
+      (qs("#standardToField").style.display = "");
+
+    qs("#standardDepartureField")?.style &&
+      (qs("#standardDepartureField").style.display = "");
+
+    qs("#swapAirports")?.style && (qs("#swapAirports").style.display = "");
+
+    multiCityFlights = [];
+  };
+
+  /* =========================
+     TRIP TYPE UPDATE
+  ========================= */
 
   function updateTripType(button) {
     if (!button) return;
 
-    /* Remove active state from all tabs */
+    /*
+      Remove active state from all tabs.
+    */
+
     tripTabs.forEach((item) => {
       item.classList.remove("active");
     });
 
-    /* Add active state to selected tab */
+    /*
+      Activate selected tab.
+    */
+
     button.classList.add("active");
 
-    /* Show Return only for Round Trip / Multi-City */
-    if (returnWrap) {
-      if (button.dataset.trip === "one") {
+    const tripType = button.dataset.trip;
+
+    /*
+      MULTI-CITY
+    */
+
+    if (tripType === "multi") {
+      initializeMultiCity();
+      return;
+    }
+
+    /*
+      Leave Multi-City mode.
+    */
+
+    disableMultiCity();
+
+    /*
+      ONE WAY
+    */
+
+    if (tripType === "one") {
+      if (returnWrap) {
         returnWrap.style.display = "none";
-
-        /* Clear return date for One Way */
-        const returnDate = qs("#returnDate");
-
-        if (returnDate) {
-          returnDate.value = "";
-        }
-      } else {
-        returnWrap.style.display = "block";
       }
+
+      const returnDate = qs("#returnDate");
+
+      if (returnDate) {
+        returnDate.value = "";
+      }
+
+      return;
+    }
+
+    /*
+      ROUND TRIP
+    */
+
+    if (returnWrap) {
+      returnWrap.style.display = "block";
     }
   }
 
   /* =========================
-   INITIAL STATE
-========================= */
-
-  /*
-   One Way is active when the website opens,
-   so hide Return immediately.
-*/
+     INITIAL STATE
+  ========================= */
 
   const activeTrip = qs(".trip-tab.active");
 
@@ -201,8 +667,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-   TRIP TAB CLICK
-========================= */
+     TRIP TAB CLICK
+  ========================= */
 
   tripTabs.forEach((button) => {
     button.addEventListener("click", () => {
@@ -230,6 +696,80 @@ document.addEventListener("DOMContentLoaded", () => {
   qs("#flightSearchForm")?.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    const activeTripButton = qs(".trip-tab.active");
+
+    const tripType = activeTripButton?.dataset.trip || "one";
+
+    /*
+      MULTI-CITY SEARCH
+    */
+
+    if (tripType === "multi") {
+      /*
+        Read the latest values directly from the inputs
+        before submitting.
+      */
+
+      qsa(".multi-city-from").forEach((input) => {
+        const index = Number(input.dataset.index);
+
+        if (multiCityFlights[index]) {
+          multiCityFlights[index].from = input.value.trim();
+        }
+      });
+
+      qsa(".multi-city-to").forEach((input) => {
+        const index = Number(input.dataset.index);
+
+        if (multiCityFlights[index]) {
+          multiCityFlights[index].to = input.value.trim();
+        }
+      });
+
+      qsa(".multi-city-date").forEach((input) => {
+        const index = Number(input.dataset.index);
+
+        if (multiCityFlights[index]) {
+          multiCityFlights[index].date = input.value;
+        }
+      });
+
+      /*
+        Validate every flight.
+      */
+
+      const incompleteFlight = multiCityFlights.find(
+        (flight) => !flight.from || !flight.to || !flight.date,
+      );
+
+      if (incompleteFlight) {
+        toast("Please complete all multi-city flight details.");
+        return;
+      }
+
+      /*
+        Create multi-city query parameters.
+
+        Example:
+
+        flights.html?
+        trip=multi&
+        multiCity=[...]
+      */
+
+      const url =
+        `flights.html?trip=multi` +
+        `&multiCity=${encodeURIComponent(JSON.stringify(multiCityFlights))}`;
+
+      window.location.href = url;
+
+      return;
+    }
+
+    /*
+      ONE WAY / ROUND TRIP
+    */
+
     const from = qs("#from")?.value.trim();
     const to = qs("#to")?.value.trim();
 
@@ -238,9 +778,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    const departure = qs("#departure")?.value || "";
+
+    const returnDate = qs("#returnDate")?.value || "";
+
     const url =
       `flights.html?from=${encodeURIComponent(from)}` +
-      `&to=${encodeURIComponent(to)}`;
+      `&to=${encodeURIComponent(to)}` +
+      `&departure=${encodeURIComponent(departure)}` +
+      `&return=${encodeURIComponent(returnDate)}` +
+      `&trip=${encodeURIComponent(tripType)}`;
 
     window.location.href = url;
   });
@@ -259,7 +806,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const routeSummary = qs("#routeSummary");
 
-    if (routeSummary) {
+    /*
+      Multi-city result summary.
+    */
+
+    const multiCityParam = params.get("multiCity");
+
+    let multiCityResult = [];
+
+    if (multiCityParam) {
+      try {
+        multiCityResult = JSON.parse(multiCityParam);
+      } catch (error) {
+        multiCityResult = [];
+      }
+    }
+
+    if (routeSummary && multiCityResult.length > 0) {
+      routeSummary.textContent =
+        multiCityResult
+          .map((flight) => `${flight.from} → ${flight.to}`)
+          .join(" · ") + " · Compare available flight options";
+    } else if (routeSummary) {
       routeSummary.textContent =
         `${from || "Delhi"} → ${to || "Dubai"} · ` +
         "Compare available flight options";
@@ -300,9 +868,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div>
-                  <span class="time">${flight.dep}</span>
+                  <span class="time">
+                    ${flight.dep}
+                  </span>
+
                   ─
-                  <span class="time">${flight.arr}</span>
+
+                  <span class="time">
+                    ${flight.arr}
+                  </span>
 
                   <div class="duration">
                     ${flight.duration}
@@ -352,7 +926,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderFlights(data);
 
-    /* SORT */
+    /* =========================
+       SORT
+    ========================= */
 
     qs("#sortFlights")?.addEventListener("change", (event) => {
       const sorted = [...window._flightData];
@@ -372,7 +948,9 @@ document.addEventListener("DOMContentLoaded", () => {
       renderFlights(sorted);
     });
 
-    /* NONSTOP */
+    /* =========================
+       NONSTOP
+    ========================= */
 
     qs("#filterNonstop")?.addEventListener("change", (event) => {
       const filtered = event.target.checked
@@ -382,7 +960,9 @@ document.addEventListener("DOMContentLoaded", () => {
       renderFlights(filtered);
     });
 
-    /* CLEAR FILTER */
+    /* =========================
+       CLEAR FILTER
+    ========================= */
 
     qs("#clearFilters")?.addEventListener("click", () => {
       const checkbox = qs("#filterNonstop");
@@ -444,157 +1024,67 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
         <div>
-
           <small>${flight.to}</small>
 
           <div class="time">
             ${flight.arr}
           </div>
-
         </div>
 
       </div>
 
-      <div>
-
-        <strong>Fare</strong>
-
-        <h2>
-          $${flight.price}
-        </h2>
-
-        <p>
-          Demo fare shown for the static prototype.
-        </p>
-
-      </div>
-    `;
-
-    localStorage.setItem("selectedFlight", JSON.stringify(flight));
-  }
-
-  /* =========================
-     BOOKING SUMMARY
-  ========================= */
-
-  const bookingSummary = qs("#bookingSummary");
-
-  if (bookingSummary) {
-    const flight =
-      JSON.parse(localStorage.getItem("selectedFlight") || "null") ||
-      flightData[0];
-
-    bookingSummary.innerHTML = `
-      <p>
-        <strong>
-          ${flight.airline}
-        </strong>
-      </p>
-
-      <p>
-        ${flight.from} → ${flight.to}
-      </p>
-
-      <p>
-        ${flight.dep} → ${flight.arr}
-      </p>
-
       <hr>
 
-      <h3>
-        $${flight.price}
-      </h3>
+      <div class="detail-price">
 
-      <small>
-        Demo prototype fare
-      </small>
+        <span>
+          Price per passenger
+        </span>
+
+        <strong>
+          $${flight.price}
+        </strong>
+
+      </div>
+
+      <br>
+
+      <a
+        class="btn btn-primary"
+        href="booking.html?id=${id}"
+      >
+        Continue to booking
+      </a>
     `;
   }
 
   /* =========================
-     BOOKING FORM
+     AIRLINE DETAILS
   ========================= */
 
-  qs("#bookingForm")?.addEventListener("submit", (event) => {
-    event.preventDefault();
+  const airlineDetail = qs("#airlineDetail");
 
-    const reference =
-      "DF" + Math.random().toString(36).slice(2, 8).toUpperCase();
-
-    localStorage.setItem("bookingRef", reference);
-
-    window.location.href = "confirmation.html";
-  });
-
-  /* =========================
-     CONFIRMATION
-  ========================= */
-
-  const bookingRef = qs("#bookingRef");
-
-  if (bookingRef) {
-    const flight =
-      JSON.parse(localStorage.getItem("selectedFlight") || "null") ||
-      flightData[0];
-
-    bookingRef.textContent = localStorage.getItem("bookingRef") || "DF-DEMO01";
-
-    const confirmationDetails = qs("#confirmationDetails");
-
-    if (confirmationDetails) {
-      confirmationDetails.innerHTML = `
-        <p>
-          <strong>
-            ${flight.airline}
-          </strong>
-          ·
-          ${flight.from} → ${flight.to}
-        </p>
-
-        <p>
-          ${flight.dep} → ${flight.arr}
-          ·
-          $${flight.price}
-        </p>
-      `;
-    }
-  }
-
-  /* =========================
-     AIRLINES
-  ========================= */
-
-  const airlineInfo = {
-    IndiGo: ["6E", "India"],
-    "Air India": ["AI", "India"],
-    Emirates: ["EK", "UAE"],
-    "Singapore Airlines": ["SQ", "Singapore"],
-  };
-
-  const airlineName = qs("#airlineName");
-
-  if (airlineName) {
+  if (airlineDetail) {
     const name =
-      new URLSearchParams(window.location.search).get("airline") || "IndiGo";
+      new URLSearchParams(window.location.search).get("name") || "Airline";
 
-    const info = airlineInfo[name] || ["", ""];
+    airlineDetail.innerHTML = `
+      <span class="eyebrow">
+        Airline
+      </span>
 
-    airlineName.textContent = name;
+      <h1>
+        ${name}
+      </h1>
 
-    const meta = qs("#airlineMeta");
-
-    if (meta) {
-      meta.textContent = `IATA: ${info[0]} · ${info[1]}`;
-    }
-
-    const description = qs("#airlineDescription");
-
-    if (description) {
-      description.textContent =
-        `Explore flight options operated by ${name}. ` +
-        `Availability, schedules and fares can change ` +
-        `and should be confirmed through the applicable provider.`;
-    }
+      <p>
+        Explore flight options operated by
+        ${name}.
+        Availability, schedules and fares can
+        change and should be confirmed through
+        the applicable provider.
+      </p>
+    `;
   }
 
   /* =========================
@@ -642,36 +1132,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     target.querySelector(".helpful")?.addEventListener("click", () => {
       target.innerHTML = `
-          <h2>
-            Glad we could help! ✓
-          </h2>
+            <h2>
+              Glad we could help! ✓
+            </h2>
 
-          <p>
-            You can return to your search
-            whenever you are ready.
-          </p>
-        `;
+            <p>
+              You can return to your search
+              whenever you are ready.
+            </p>
+          `;
     });
 
     target.querySelector(".not-helpful")?.addEventListener("click", () => {
       target.innerHTML = `
-          <h2>
-            Let's get this resolved.
-          </h2>
+            <h2>
+              Let's get this resolved.
+            </h2>
 
-          <p>
-            Please contact the Dream Fly
-            service team with your booking
-            reference and issue details.
-          </p>
+            <p>
+              Please contact the Dream Fly
+              service team with your booking
+              reference and issue details.
+            </p>
 
-          <a
-            class="btn btn-primary"
-            href="contact.html"
-          >
-            Contact service team
-          </a>
-        `;
+            <a
+              class="btn btn-primary"
+              href="contact.html"
+            >
+              Contact service team
+            </a>
+          `;
     });
   };
 
@@ -685,11 +1175,8 @@ document.addEventListener("DOMContentLoaded", () => {
      CHAT WIDGET
   ========================= */
 
-  /* =========================
-   CHAT WIDGET
-========================= */
-
   const chatToggle = qs("#chatToggle");
+
   const chatPanel = qs("#chatPanel");
 
   chatToggle?.addEventListener("click", () => {
@@ -701,8 +1188,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-   SUPPORT CHAT FUNCTIONS
-========================= */
+     SUPPORT CHAT FUNCTIONS
+  ========================= */
 
   function showChatHome() {
     const body = qs("#chatBody");
@@ -710,45 +1197,46 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!body) return;
 
     body.innerHTML = `
-    <div class="chat-message bot">
-      Hi! Choose a common problem and I'll show you the available guidance.
-    </div>
+      <div class="chat-message bot">
+        Hi! Choose a common problem and
+        I'll show you the available guidance.
+      </div>
 
-    <div class="chat-options">
+      <div class="chat-options">
 
-      <button data-chat-topic="booking">
-        🎫 Booking problem
-      </button>
+        <button data-chat-topic="booking">
+          🎫 Booking problem
+        </button>
 
-      <button data-chat-topic="payment">
-        💳 Payment problem
-      </button>
+        <button data-chat-topic="payment">
+          💳 Payment problem
+        </button>
 
-      <button data-chat-topic="cancel">
-        🔄 Change / cancel
-      </button>
+        <button data-chat-topic="cancel">
+          🔄 Change / cancel
+        </button>
 
-      <button data-chat-topic="confirmation">
-        📧 Confirmation
-      </button>
+        <button data-chat-topic="confirmation">
+          📧 Confirmation
+        </button>
 
-      <button data-chat-topic="refund">
-        💰 Refund
-      </button>
+        <button data-chat-topic="refund">
+          💰 Refund
+        </button>
 
-      <button data-chat-topic="other">
-        ❓ Other issue
-      </button>
+        <button data-chat-topic="other">
+          ❓ Other issue
+        </button>
 
-    </div>
-  `;
+      </div>
+    `;
 
     attachChatTopicEvents();
   }
 
   /* =========================
-   SHOW CHAT ANSWER
-========================= */
+     SHOW CHAT ANSWER
+  ========================= */
 
   function showChatAnswer(topic) {
     const body = qs("#chatBody");
@@ -758,88 +1246,92 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer = supportAnswers[topic] || supportAnswers.other;
 
     body.innerHTML = `
-    <button class="chat-back-btn" id="chatBack">
-      ← Back
-    </button>
-
-    <div class="chat-message bot">
-
-      <strong>
-        ${answer[0]}
-      </strong>
-
-      <br><br>
-
-      ${answer[1]}
-
-    </div>
-
-    <div class="chat-message bot">
-      Was this helpful?
-    </div>
-
-    <div class="chat-options">
-
-      <button id="chatYes">
-        👍 Yes
+      <button
+        class="chat-back-btn"
+        id="chatBack"
+      >
+        ← Back
       </button>
 
-      <button id="chatNo">
-        👎 No
-      </button>
+      <div class="chat-message bot">
 
-    </div>
-  `;
+        <strong>
+          ${answer[0]}
+        </strong>
 
-    /* =========================
-     BACK BUTTON
-  ========================= */
+        <br><br>
+
+        ${answer[1]}
+
+      </div>
+
+      <div class="chat-message bot">
+        Was this helpful?
+      </div>
+
+      <div class="chat-options">
+
+        <button id="chatYes">
+          👍 Yes
+        </button>
+
+        <button id="chatNo">
+          👎 No
+        </button>
+
+      </div>
+    `;
+
+    /* BACK */
 
     qs("#chatBack")?.addEventListener("click", () => {
       showChatHome();
     });
 
-    /* =========================
-     YES BUTTON
-  ========================= */
+    /* YES */
 
     qs("#chatYes")?.addEventListener("click", () => {
       body.innerHTML = `
-      <button class="chat-back-btn" id="chatBack">
-        ← Back
-      </button>
+          <button
+            class="chat-back-btn"
+            id="chatBack"
+          >
+            ← Back
+          </button>
 
-      <div class="chat-message bot">
-        Great! Happy to help. ✈️
-      </div>
-    `;
+          <div class="chat-message bot">
+            Great! Happy to help. ✈️
+          </div>
+        `;
 
       qs("#chatBack")?.addEventListener("click", () => {
         showChatAnswer(topic);
       });
     });
 
-    /* =========================
-     NO BUTTON
-  ========================= */
+    /* NO */
 
     qs("#chatNo")?.addEventListener("click", () => {
       body.innerHTML = `
-      <button class="chat-back-btn" id="chatBack">
-        ← Back
-      </button>
+          <button
+            class="chat-back-btn"
+            id="chatBack"
+          >
+            ← Back
+          </button>
 
-      <div class="chat-message bot">
-        No problem. A service agent can help with your issue.
-      </div>
+          <div class="chat-message bot">
+            No problem. A service agent can
+            help with your issue.
+          </div>
 
-      <a
-        class="btn btn-primary full"
-        href="contact.html"
-      >
-        Contact service team
-      </a>
-    `;
+          <a
+            class="btn btn-primary full"
+            href="contact.html"
+          >
+            Contact service team
+          </a>
+        `;
 
       qs("#chatBack")?.addEventListener("click", () => {
         showChatAnswer(topic);
@@ -848,8 +1340,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-   CHAT TOPIC EVENTS
-========================= */
+     CHAT TOPIC EVENTS
+  ========================= */
 
   function attachChatTopicEvents() {
     qsa("[data-chat-topic]").forEach((button) => {
@@ -862,8 +1354,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-   INITIAL CHAT EVENTS
-========================= */
+     INITIAL CHAT EVENTS
+  ========================= */
 
   attachChatTopicEvents();
 
@@ -897,17 +1389,20 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
 
   const passengerTrigger = qs("#passengerTrigger");
+
   const passengerPopup = qs("#passengerPopup");
+
   const passengerDone = qs("#passengerDone");
 
   const adultCount = qs("#adultCount");
+
   const childCount = qs("#childCount");
+
   const infantCount = qs("#infantCount");
 
   const passengerSummary = qs("#passengerSummary");
-  const passengerTotal = qs("#passengerTotal");
 
-  /* Passenger numbers */
+  const passengerTotal = qs("#passengerTotal");
 
   let passengers = {
     adult: 1,
@@ -915,13 +1410,17 @@ document.addEventListener("DOMContentLoaded", () => {
     infant: 0,
   };
 
-  /* Calculate total */
+  /* =========================
+     TOTAL PASSENGERS
+  ========================= */
 
   const getTotalPassengers = () => {
     return passengers.adult + passengers.child + passengers.infant;
   };
 
-  /* Update passenger display */
+  /* =========================
+     PASSENGER DISPLAY
+  ========================= */
 
   const updatePassengerDisplay = () => {
     const total = getTotalPassengers();
@@ -949,7 +1448,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  /* Open passenger popup */
+  /* =========================
+     OPEN PASSENGER POPUP
+  ========================= */
 
   const openPassengerPopup = () => {
     if (!passengerPopup || !passengerTrigger) {
@@ -961,7 +1462,9 @@ document.addEventListener("DOMContentLoaded", () => {
     passengerTrigger.setAttribute("aria-expanded", "true");
   };
 
-  /* Close passenger popup */
+  /* =========================
+     CLOSE PASSENGER POPUP
+  ========================= */
 
   const closePassengerPopup = () => {
     if (!passengerPopup || !passengerTrigger) {
@@ -973,7 +1476,9 @@ document.addEventListener("DOMContentLoaded", () => {
     passengerTrigger.setAttribute("aria-expanded", "false");
   };
 
-  /* Passenger field click */
+  /* =========================
+     PASSENGER FIELD CLICK
+  ========================= */
 
   passengerTrigger?.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -1001,7 +1506,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const total = getTotalPassengers();
 
-      /* Maximum 9 travelers */
+      /*
+            Maximum 9 travelers.
+          */
 
       if (total >= 9) {
         toast("Maximum 9 travelers allowed.");
@@ -1028,13 +1535,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      /* Adult minimum = 1 */
+      /*
+            Adult minimum = 1.
+          */
 
       if (type === "adult" && passengers.adult <= 1) {
         return;
       }
 
-      /* Child / Infant minimum = 0 */
+      /*
+            Child / Infant minimum = 0.
+          */
 
       if (passengers[type] <= 0) {
         return;

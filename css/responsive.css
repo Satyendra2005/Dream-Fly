@@ -1066,3 +1066,129 @@ span {
     right: -4px;
   }
 }
+
+/* =========================================================
+   MULTI-CITY — RESPONSIVE FIX
+   Dream Fly
+========================================================= */
+
+/* Tablets and smaller laptops */
+
+@media (max-width: 1024px) {
+  .multi-city-row-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .multi-city-row-fields .search-field:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .multi-city-fields {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .multi-city-rows {
+    gap: 8px;
+  }
+
+  .multi-city-row {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .multi-city-row-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .multi-city-row-fields .search-field:last-child {
+    grid-column: auto;
+  }
+
+  .multi-city-row .search-field {
+    width: 100%;
+  }
+
+  .multi-city-row input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .multi-city-row-header {
+    width: 100%;
+  }
+
+  .remove-flight-btn {
+    flex-shrink: 0;
+  }
+
+  .add-flight-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Small phones */
+
+@media (max-width: 480px) {
+  .multi-city-row {
+    padding: 9px;
+    border-radius: 10px;
+  }
+
+  .multi-city-row-header {
+    margin-bottom: 8px;
+  }
+
+  .multi-city-row-header strong {
+    font-size: 0.85rem;
+  }
+
+  .multi-city-row input {
+    height: 46px;
+
+    /*
+      Keep space for the location/calendar icon.
+    */
+    padding-left: 35px;
+    padding-right: 12px;
+  }
+
+  .multi-city-row .field-icon {
+    left: 11px;
+  }
+
+  .add-flight-btn {
+    min-height: 44px;
+    font-size: 0.88rem;
+  }
+}
+
+/* Very small phones */
+
+@media (max-width: 360px) {
+  .multi-city-row {
+    padding: 8px;
+  }
+
+  .multi-city-row input {
+    height: 44px;
+    padding-left: 34px;
+  }
+
+  .multi-city-row .field-icon {
+    left: 10px;
+  }
+
+  .remove-flight-btn {
+    width: 28px;
+    height: 28px;
+  }
+}
